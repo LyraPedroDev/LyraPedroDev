@@ -537,11 +537,11 @@
 
             <!-- Link de E-mail Elegante e Visível -->
             <div class="mb-10">
-                <a href="mailto:pedro.henrique.lyra17@gmail.com" class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2">
-                    <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="mailto:pedro.henrique.lyra17@gmail.com" id="contact-email-btn" class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2 cursor-pointer">
+                    <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-9 11h-3a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2z" />
                     </svg>
-                    pedro.henrique.lyra17@gmail.com
+                    <span id="email-text">pedro.henrique.lyra17@gmail.com</span>
                 </a>
             </div>
 
@@ -665,7 +665,8 @@
                 footer_copyright: "Pedro Lyra &copy; 2026. Feito com curiosidade e dedicação.",
                 modal_features_title: "O que aprendi no projeto",
                 modal_close_btn: "Fechar",
-                modal_github_btn: "Ver no GitHub"
+                modal_github_btn: "Ver no GitHub",
+                msg_email_copied: "E-mail copiado!"
             },
             'en': {
                 logo: "Pedro Lyra",
@@ -710,7 +711,8 @@
                 footer_copyright: "Pedro Lyra &copy; 2026. Built with curiosity and dedication.",
                 modal_features_title: "What I learned in this project",
                 modal_close_btn: "Close",
-                modal_github_btn: "View on GitHub"
+                modal_github_btn: "View on GitHub",
+                msg_email_copied: "Email copied!"
             }
         };
 
@@ -900,6 +902,32 @@
 
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
+        });
+
+        // --- LÓGICA DE COPIAR E-MAIL COM FEEDBACK VISUAL ---
+        const emailBtn = document.getElementById('contact-email-btn');
+        const emailText = document.getElementById('email-text');
+        const emailAddress = "pedro.henrique.lyra17@gmail.com";
+        let isCopying = false;
+
+        emailBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Previne a abertura do cliente de e-mail local (mailto)
+            if (isCopying) return;
+
+            isCopying = true;
+            navigator.clipboard.writeText(emailAddress).then(() => {
+                // Altera o texto para a mensagem traduzida temporariamente
+                emailText.textContent = translations[currentLang]['msg_email_copied'];
+                
+                // Restaura o e-mail após 2 segundos
+                setTimeout(() => {
+                    emailText.textContent = emailAddress;
+                    isCopying = false;
+                }, 2000);
+            }).catch(err => {
+                console.error("Falha ao copiar o e-mail: ", err);
+                isCopying = false;
+            });
         });
     </script>
 </body>
