@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title = "Pedro Lyra — Portfólio Pessoal",
+  description = "Espaço digital de Pedro Lyra. Jovem autodidata, curioso e apaixonado por segurança cibernética, Linux, automação e desenvolvimento backend.",
+  lang = "pt-BR",
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    
+    <!-- Meta Tags para SEO & Netlify -->
+    <meta name="description" content={description} />
+    <meta name="author" content="Pedro Lyra" />
+    <meta name="theme-color" content="#090A0F" />
+    
+    <!-- OpenGraph Meta Tags para Compartilhamento -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pedro Lyra" />
+    
+    <!-- Preload e Preconnect para Performance de Rede -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="relative min-h-screen overflow-x-hidden antialiased">
+    <!-- Fundo Estrutural da Grelha Cyber -->
+    <div class="absolute inset-0 tech-grid pointer-events-none z-0" aria-hidden="true"></div>
+    
+    <!-- Orbes Luminosos de Fundo com Fator GPU Composited -->
+    <div class="glow-orb glow-purple animate-float-purple gpu-composited top-[-150px] right-[-100px]" aria-hidden="true"></div>
+    <div class="glow-orb glow-blue animate-float-blue gpu-composited top-[35%] left-[-150px]" aria-hidden="true"></div>
+    <div class="glow-orb glow-purple animate-float-cyan gpu-composited bottom-[-150px] right-[50px]" aria-hidden="true"></div>
+
+    <!-- Conteúdo da Página -->
+    <slot />
+  </body>
+</html>

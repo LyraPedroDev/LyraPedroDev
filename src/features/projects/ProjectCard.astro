@@ -1,0 +1,114 @@
+---
+import Card from '../../components/ui/Card.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  filename: string;
+  techs: string[];
+  github: string;
+  category: string;
+  theme?: 'purple' | 'blue' | 'cyan';
+}
+
+const {
+  id,
+  title,
+  description,
+  filename,
+  techs,
+  github,
+  category,
+  theme = 'purple',
+} = Astro.props;
+
+const strokeColors = {
+  purple: 'stroke-cyber-purple',
+  blue: 'stroke-cyber-blue',
+  cyan: 'stroke-cyber-cyan',
+};
+
+const textThemeColors = {
+  purple: 'text-cyber-purple',
+  blue: 'text-cyber-blue',
+  cyan: 'text-cyber-cyan',
+};
+
+const hoverThemeColors = {
+  purple: 'group-hover:text-cyber-purple',
+  blue: 'group-hover:text-cyber-blue',
+  cyan: 'group-hover:text-cyber-cyan',
+};
+---
+
+<Card theme={theme} id={`project-card-${id}`} class="stagger-card">
+  <!-- Border Beam SVG Vector Animation (Zero Idle Power na GPU) -->
+  <svg class="border-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <rect
+      class={`border-beam-rect ${strokeColors[theme]}`}
+      x="0.5"
+      y="0.5"
+      width="99"
+      height="99"
+      rx="4"
+    />
+  </svg>
+  
+  <div class="relative z-10 flex flex-col justify-between h-full w-full">
+    <!-- Barra Superior do Card Estilo IDE -->
+    <div class="px-5 py-3.5 bg-white/3 border-b border-white/5 flex items-center justify-between select-none">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500/60" aria-hidden="true"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60" aria-hidden="true"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60" aria-hidden="true"></span>
+      </div>
+      <span class="font-mono text-[10px] text-gray-500">{filename}</span>
+    </div>
+    
+    <!-- Área de Conteúdo Central -->
+    <div class="p-6">
+      <span class={`text-[10px] font-mono tracking-widest uppercase block mb-1.5 ${textThemeColors[theme]}`}>
+        {category}
+      </span>
+      <h3 class={`font-display text-lg font-bold text-white transition-colors cursor-pointer ${hoverThemeColors[theme]}`}>
+        {title}
+      </h3>
+      <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mt-3">
+        {description}
+      </p>
+    </div>
+    
+    <!-- Rodapé com Tecnologias & Ações de Acessibilidade -->
+    <div class="px-6 pb-6 flex flex-col gap-4 mt-auto">
+      <div class="flex flex-wrap gap-1.5">
+        {techs.map((tech) => (
+          <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">
+            {tech}
+          </span>
+        ))}
+      </div>
+      
+      <div class="flex items-center justify-between pt-3.5 border-t border-white/5">
+        <button
+          aria-label={`Ver detalhes do projeto ${title}`}
+          class={`text-xs font-mono font-semibold transition-colors hover:text-white cursor-pointer ${textThemeColors[theme]}`}
+        >
+          Ver Detalhes
+        </button>
+        <a
+          href={github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ver código-fonte de ${title} no GitHub`}
+          class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
+        >
+          <span>Ver Código</span>
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</Card>

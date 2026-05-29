@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedro Lyra — Portfólio Pessoal</title>
-    
+
     <!-- Meta Tags para SEO & Netlify -->
-    <meta name="description" content="Espaço digital de Pedro Lyra. Jovem autodidata, curioso e apaixonado por segurança cibernética, Linux, automação e desenvolvimento backend.">
+    <meta name="description"
+        content="Espaço digital de Pedro Lyra. Jovem autodidata, curioso e apaixonado por segurança cibernética, Linux, automação e desenvolvimento backend.">
     <meta name="author" content="Pedro Lyra">
     <meta name="theme-color" content="#090A0F">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -41,7 +45,7 @@
         }
     </script>
 
-    <!-- Custom CSS (Glassmorphism & Cyber Aesthetics) -->
+    <!-- Custom CSS (Glassmorphism 2.0 & Cyber Aesthetics) -->
     <style>
         body {
             background-color: #090A0F;
@@ -53,13 +57,14 @@
         /* Efeito de Grelha de Fundo */
         .tech-grid {
             background-size: 40px 40px;
-            background-image: 
+            background-image:
                 linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
         }
 
-        /* Glassmorphism Premium */
+        /* Glassmorphism Premium 2.0 */
         .glass-card {
+            position: relative;
             background: rgba(13, 14, 22, 0.65);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -68,17 +73,98 @@
         }
 
         .glass-card:hover {
-            border-color: rgba(124, 58, 237, 0.3);
-            box-shadow: 0 20px 40px -15px rgba(124, 58, 237, 0.12),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.06);
-            transform: translateY(-4px);
+            border-color: rgba(124, 58, 237, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(124, 58, 237, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            transform: translateY(-6px);
         }
 
         .glass-card-blue:hover {
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.12),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.06);
-            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            transform: translateY(-6px);
+        }
+
+        .glass-card-cyan:hover {
+            border-color: rgba(0, 217, 255, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(0, 217, 255, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            transform: translateY(-6px);
+        }
+
+        /* Efeito Border Beam (Borda Animada Premium) */
+        .border-beam-container {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            /* Espessura da borda */
+            background: transparent;
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.25;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover .border-beam-container {
+            opacity: 0.8;
+            filter: drop-shadow(0 0 5px rgba(124, 58, 237, 0.5));
+        }
+
+        .glass-card-blue:hover .border-beam-container {
+            filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.5));
+        }
+
+        .glass-card-cyan:hover .border-beam-container {
+            filter: drop-shadow(0 0 5px rgba(0, 217, 255, 0.5));
+        }
+
+        .border-beam-container::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    #7C3AED 25%,
+                    #06B6D4 50%,
+                    transparent 75%,
+                    transparent 100%);
+            animation: border-beam-spin 8s linear infinite;
+        }
+
+        /* Borda animada variante azul dominante */
+        .border-beam-blue::before {
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    #06B6D4 25%,
+                    #7C3AED 50%,
+                    transparent 75%,
+                    transparent 100%);
+        }
+
+        /* Borda animada variante cyan neon / magenta */
+        .border-beam-cyan::before {
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    #00D9FF 25%,
+                    #FF006E 50%,
+                    transparent 75%,
+                    transparent 100%);
+        }
+
+        @keyframes border-beam-spin {
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Navegação Flutuante */
@@ -89,26 +175,55 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        /* Orbes Luminosos */
+        /* Orbes Luminosos com mix-blend-mode */
         .glow-orb {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
+            mix-blend-mode: plus-lighter;
         }
 
         .glow-purple {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, rgba(124, 58, 237, 0) 70%);
-            filter: blur(60px);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, rgba(124, 58, 237, 0) 70%);
+            filter: blur(80px);
         }
 
         .glow-blue {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, rgba(6, 182, 212, 0) 70%);
-            filter: blur(60px);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, rgba(6, 182, 212, 0) 70%);
+            filter: blur(80px);
+        }
+
+        /* Animações de Flutuação Tridimensional dos Orbes */
+        @keyframes float-purple {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-30px) scale(1.06) rotate(6deg); }
+        }
+
+        @keyframes float-blue {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-40px) scale(0.94) rotate(-6deg); }
+        }
+
+        @keyframes float-cyan {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-25px) scale(1.03) rotate(4deg); }
+        }
+
+        .animate-float-purple {
+            animation: float-purple 12s ease-in-out infinite;
+        }
+
+        .animate-float-blue {
+            animation: float-blue 15s ease-in-out infinite;
+        }
+
+        .animate-float-cyan {
+            animation: float-cyan 9s ease-in-out infinite;
         }
 
         /* Gradientes e Acentos */
@@ -129,10 +244,12 @@
             0% {
                 transform: skewX(-12deg) translateX(-100%);
             }
+
             100% {
                 transform: skewX(-12deg) translateX(200%);
             }
         }
+
         .group:hover .group-hover\:animate-shine {
             animation: shine 0.8s ease-in-out;
         }
@@ -141,380 +258,490 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #090A0F;
         }
+
         ::-webkit-scrollbar-thumb {
             background: rgba(124, 58, 237, 0.2);
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(124, 58, 237, 0.4);
         }
 
-        /* Intersection Observer Fade-in */
+        /* Animação reversa para o Loader */
+        @keyframes spin-reverse {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        .animate-spin-reverse {
+            animation: spin-reverse 1.5s linear infinite;
+        }
+
+        /* Intersection Observer Fade-in & Stagger */
         .fade-in-section {
             opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Stagger em HTML nativo */
+        .fade-in-section:nth-child(1) { transition-delay: 100ms; }
+        .fade-in-section:nth-child(2) { transition-delay: 200ms; }
+        .fade-in-section:nth-child(3) { transition-delay: 300ms; }
+        .fade-in-section:nth-child(4) { transition-delay: 400ms; }
+
+        /* Stagger dinâmico para cards */
+        .stagger-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stagger-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Microinterações de Foco e Interatividade */
+        *:focus-visible {
+            outline: 2px solid #7C3AED !important;
+            outline-offset: 4px !important;
+        }
+
+        .btn-interactive {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .btn-interactive:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-interactive-blue:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
+            50% { box-shadow: 0 0 20px 6px rgba(124, 58, 237, 0.6); }
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2.5s infinite;
+        }
+
+        /* Links de rodapé com linha interativa */
+        .footer-link {
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .footer-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Novas Cores Acessórias Cyberpunk */
+        .text-cyber-pink { color: #FF006E; }
+        .text-cyber-cyan { color: #00D9FF; }
+        .text-cyber-yellow { color: #FFB600; }
+        
+        .bg-cyber-pink { background-color: #FF006E; }
+        .bg-cyber-cyan { background-color: #00D9FF; }
+        .bg-cyber-yellow { background-color: #FFB600; }
+
+        .border-cyber-pink { border-color: #FF006E; }
+        .border-cyber-cyan { border-color: #00D9FF; }
+        .border-cyber-yellow { border-color: #FFB600; }
+
+        /* Responsividade Refinada */
+        @media (max-width: 1024px) {
+            .glow-purple, .glow-blue {
+                width: 450px;
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .glow-purple, .glow-blue {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .glow-purple, .glow-blue {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .max-w-6xl {
+                max-width: 1400px;
+            }
+        }
     </style>
 </head>
+
 <body class="relative min-h-screen overflow-x-hidden antialiased">
+
+    <!-- SYSTEM BOOT LOADER (Carregamento Premium) -->
+    <div id="loader"
+        class="fixed inset-0 z-[100] bg-[#090A0F] flex flex-col items-center justify-center transition-all duration-700 ease-in-out pointer-events-auto">
+        <div class="flex flex-col items-center space-y-5 max-w-xs w-full px-6 text-center">
+            <!-- Loader Cyber Orb -->
+            <div class="relative w-16 h-16">
+                <div
+                    class="absolute inset-0 rounded-full border-[3px] border-t-cyber-purple border-r-cyber-blue border-b-transparent border-l-transparent animate-spin">
+                </div>
+                <div
+                    class="absolute inset-2 rounded-full border border-t-cyber-blue border-r-transparent border-b-cyber-purple border-l-transparent animate-spin-reverse opacity-60">
+                </div>
+                <div
+                    class="absolute inset-4 rounded-full bg-gradient-to-br from-cyber-purple to-cyber-blue opacity-20 blur-sm">
+                </div>
+            </div>
+
+            <!-- Texto de Status -->
+            <div
+                class="font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase flex items-center justify-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyber-blue animate-pulse"></span>
+                <span id="loader-text" data-i18n="loader_initializing">Inicializando Sistema...</span>
+            </div>
+
+            <!-- Barra de Progresso -->
+            <div class="w-full h-[2px] bg-white/5 rounded-full overflow-hidden relative">
+                <div id="loader-progress"
+                    class="h-full bg-gradient-to-r from-cyber-purple to-cyber-blue w-0 transition-all duration-300 ease-out">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Fundo Estrutural -->
     <div class="absolute inset-0 tech-grid pointer-events-none z-0"></div>
-    
-    <!-- Orbes Luminosos de Fundo (Muito sutis) -->
-    <div class="glow-orb glow-purple top-[-150px] right-[-100px]"></div>
-    <div class="glow-orb glow-blue top-[35%] left-[-150px]"></div>
-    <div class="glow-orb glow-purple bottom-[-150px] right-[50px]"></div>
+
+    <!-- Orbes Luminosos de Fundo (mix-blend-mode plus-lighter) -->
+    <div class="glow-orb glow-purple animate-float-purple top-[-150px] right-[-100px]"></div>
+    <div class="glow-orb glow-blue animate-float-blue top-[35%] left-[-150px]"></div>
+    <div class="glow-orb glow-purple animate-float-cyan bottom-[-150px] right-[50px]"></div>
 
     <!-- HEADER & NAVEGAÇÃO -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300 py-5">
         <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-blue flex items-center justify-center p-[1px] transition-transform duration-300 group-hover:rotate-6">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-blue flex items-center justify-center p-[1px] transition-transform duration-300 group-hover:rotate-6">
                     <div class="w-full h-full rounded-[7px] bg-[#090A0F] flex items-center justify-center">
                         <span class="font-mono text-xs font-bold text-cyber-blue">PL</span>
                     </div>
                 </div>
                 <span class="font-display font-bold tracking-wide text-white text-base">
-                    Pedro <span class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-transparent bg-clip-text">Lyra</span>
+                    Pedro <span
+                        class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-transparent bg-clip-text">Lyra</span>
                 </span>
             </a>
-            
+
             <!-- Links de Navegação -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#sobre" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium" data-i18n="nav_sobre">Sobre Mim</a>
-                <a href="#projetos" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium" data-i18n="nav_projetos">Projetos</a>
-                <a href="#desenvolvimento" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium" data-i18n="nav_desenvolvimento">Em Desenvolvimento</a>
+                <a href="#sobre"
+                    class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium"
+                    data-i18n="nav_sobre">Sobre Mim</a>
+                <a href="#projetos"
+                    class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium"
+                    data-i18n="nav_projetos">Projetos</a>
+                <a href="#desenvolvimento"
+                    class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium"
+                    data-i18n="nav_desenvolvimento">Em Desenvolvimento</a>
             </div>
 
-            <!-- Language & LinkedIn Controls -->
+            <!-- Controles de Idioma & LinkedIn -->
             <div class="flex items-center gap-4">
                 <!-- Seletor de Idioma Dinâmico -->
-                <button id="lang-switch-btn" class="font-mono text-xs text-gray-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/5 bg-white/3 transition-all duration-300 hover:border-cyber-purple flex items-center gap-1.5" aria-label="Alterar idioma / Switch language">
+                <button id="lang-switch-btn"
+                    class="font-mono text-xs text-gray-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/5 bg-white/3 transition-all duration-300 hover:border-cyber-purple flex items-center gap-1.5"
+                    aria-label="Alterar idioma / Switch language">
                     <span id="lang-flag" class="text-xs">🇺🇸</span>
                     <span id="lang-label">EN</span>
                 </button>
 
-                <!-- LinkedIn CTA Button -->
+                <!-- Botão LinkedIn CTA -->
                 <div class="hidden sm:block">
-                    <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer" class="relative group inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-medium text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden">
-                        <span class="absolute inset-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:animate-shine"></span>
+                    <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Perfil do LinkedIn de Pedro Lyra"
+                        class="relative group inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-medium text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden btn-interactive animate-pulse-glow">
+                        <span
+                            class="absolute inset-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:animate-shine"></span>
                         LinkedIn
-                        <svg class="w-3 h-3 ml-1.5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        <svg class="w-3 h-3 ml-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                         </svg>
                     </a>
                 </div>
             </div>
 
             <!-- Botão Menu Mobile -->
-            <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label="Abrir Menu">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none"
+                aria-label="Abrir Menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
         </div>
-        
+
         <!-- Menu Mobile Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-6 pt-2 bg-[#090A0F]/95 backdrop-blur-lg border-b border-white/5">
+        <div id="mobile-menu"
+            class="hidden md:hidden px-6 pb-6 pt-2 bg-[#090A0F]/95 backdrop-blur-lg border-b border-white/5">
             <div class="flex flex-col gap-4">
-                <a href="#sobre" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium" data-i18n="nav_sobre">Sobre Mim</a>
-                <a href="#projetos" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium" data-i18n="nav_projetos">Projetos</a>
-                <a href="#desenvolvimento" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium" data-i18n="nav_desenvolvimento">Em Desenvolvimento</a>
-                <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer" class="block text-center px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-xs text-white font-semibold uppercase tracking-wider transition-all duration-300">
+                <a href="#sobre"
+                    class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium"
+                    data-i18n="nav_sobre">Sobre Mim</a>
+                <a href="#projetos"
+                    class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium"
+                    data-i18n="nav_projetos">Projetos</a>
+                <a href="#desenvolvimento"
+                    class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium"
+                    data-i18n="nav_desenvolvimento">Em Desenvolvimento</a>
+                <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer"
+                    class="block text-center px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-xs text-white font-semibold uppercase tracking-wider transition-all duration-300">
                     LinkedIn
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION (Quem sou eu / Sobre Mim) -->
-    <header id="sobre" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-6 z-10">
-        <div class="max-w-4xl mx-auto text-center">
-            
+    <!-- HERO SECTION (Quem sou eu / Sobre Mim & Terminal) -->
+    <header id="sobre" class="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-16 px-6 z-10">
+        <div class="max-w-4xl mx-auto text-center w-full">
+
             <!-- Badge Superior -->
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-[10px] font-mono font-bold tracking-widest text-purple-300 uppercase mb-8" data-i18n="badge_header">
-                Autodidata & Explorador Tecnológico
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-[10px] font-mono font-bold tracking-widest text-purple-300 uppercase mb-8"
+                data-i18n="badge_header">
+                Jornada de Aprendizado Contínuo
             </div>
-            
+
             <!-- Tagline Principal -->
             <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15] mb-8">
                 <span class="text-gradient" data-i18n="hero_tagline_1">Movido pela curiosidade.</span><br>
-                <span class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-transparent bg-clip-text" data-i18n="hero_tagline_2">Apaixonado por tecnologia.</span>
+                <span class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-transparent bg-clip-text"
+                    data-i18n="hero_tagline_2">Explorando sistemas e códigos.</span>
             </h1>
-            
+
             <!-- Descrição Principal (i18n) -->
-            <p class="max-w-2xl mx-auto text-gray-400 text-sm sm:text-base md:text-lg font-normal leading-relaxed mb-12 tracking-wide" data-i18n="hero_desc">
-                Sou o Pedro, um jovem autodidata fascinado por segurança cibernética, Linux e automação. Adoro desmontar sistemas para entender como funcionam e construir soluções práticas. Este é o meu espaço digital onde compartilho quem sou e o que estou construindo.
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm sm:text-base md:text-lg font-normal leading-relaxed mb-12 tracking-wide"
+                data-i18n="hero_desc">
+                Sou o Pedro, um jovem autodidata fascinado por segurança cibernética, Linux e automação. Dedico meu
+                tempo a aprender e aplicar tecnologia em soluções práticas, sempre buscando aprimoramento. Adoro
+                desmontar sistemas para entender como funcionam por dentro. Este é o meu espaço digital onde compartilho
+                minha jornada de evolução e o que estou construindo.
             </p>
-            
+
             <!-- Skill Set Tags -->
-            <div class="max-w-xl mx-auto">
-                <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4" data-i18n="interests_title">// Interesses & Tecnologia</span>
+            <div class="max-w-xl mx-auto mb-16">
+                <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4"
+                    data-i18n="interests_title">// Meu Foco de Estudo</span>
                 <div class="flex flex-wrap justify-center gap-2">
-                    <span class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
+                    <span
+                        class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple"></span>
                         Python & Flask
                     </span>
-                    <span class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-cyan-300 flex items-center gap-1.5">
+                    <span
+                        class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-cyan-300 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-cyber-blue"></span>
                         React & TS
                     </span>
-                    <span class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
+                    <span
+                        class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple"></span>
                         C# & ASP.NET MVC
                     </span>
-                    <span class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-cyan-300 flex items-center gap-1.5">
+                    <span
+                        class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-cyan-300 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-cyber-blue"></span>
                         Linux Mint/Tails
                     </span>
-                    <span class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
+                    <span
+                        class="font-mono text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-purple-300 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple"></span>
                         Automação (n8n)
                     </span>
                 </div>
             </div>
-            
+
+            <!-- TERMINAL INTERATIVO (Componente Premium Cyber 2.0) -->
+            <div class="max-w-2xl mx-auto w-full px-2 sm:px-4 fade-in-section">
+                <div
+                    class="glass-card rounded-xl overflow-hidden border border-white/5 text-left font-mono text-xs shadow-2xl relative">
+                    <!-- Border Beam Animado -->
+                    <div class="border-beam-container"></div>
+
+                    <!-- Cabeçalho do Terminal -->
+                    <div
+                        class="relative z-10 px-4 py-3 bg-[#0d0e16]/80 border-b border-white/5 flex items-center justify-between select-none">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/60 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/50 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/50 inline-block"></span>
+                        </div>
+                        <span class="text-[10px] text-gray-500 tracking-wider" data-i18n="term_tab_title">terminal -
+                            pedro@lyra-mint: ~</span>
+                        <span class="text-[10px] text-gray-400 font-semibold">bash</span>
+                    </div>
+
+                    <!-- Corpo do Terminal -->
+                    <div id="terminal-body"
+                        class="relative z-10 p-5 space-y-3 bg-[#090A0F]/85 min-h-[350px] text-gray-300 select-all overflow-x-auto leading-relaxed max-h-[400px]">
+                        <!-- As linhas serão injetadas de forma dinâmica e interativa via script -->
+                    </div>
+                </div>
+            </div>
+
         </div>
     </header>
 
-    <!-- SECÇÃO: PROJETOS CONCLUÍDOS (O que já construí) -->
+    <!-- SECÇÃO: PROJETOS CONCLUÍDOS (Renderizado Dinamicamente) -->
     <section id="projetos" class="py-24 px-6 relative z-10 max-w-6xl mx-auto fade-in-section">
-        
-        <!-- Cabeçalho -->
+
+        <!-- Cabeçalho da Seção -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-4">
             <div>
-                <span class="font-mono text-xs font-bold tracking-widest text-cyber-purple uppercase block mb-2.5" data-i18n="section_projects_badge">// Repositórios Ativos</span>
-                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white" data-i18n="section_projects_title">
-                    O que já construí
+                <span class="font-mono text-xs font-bold tracking-widest text-cyber-purple uppercase block mb-2.5"
+                    data-i18n="section_projects_badge">// Projetos Ativos</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white"
+                    data-i18n="section_projects_title">
+                    O que ando construindo
                 </h2>
             </div>
             <p class="max-w-xs text-gray-400 text-sm leading-relaxed" data-i18n="section_projects_desc">
-                Aplicações concluídas e soluções de automação práticas desenvolvidas do zero.
+                Aplicações e soluções de automação que desenvolvi para aplicar conceitos práticos.
             </p>
         </div>
 
-        <!-- Grelha de 3 Cards de Projetos -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            
-            <!-- Card 1: EcoChat -->
-            <div class="glass-card rounded-xl overflow-hidden flex flex-col justify-between h-full group">
-                <div>
-                    <!-- Visualização Simples de Topo do Card -->
-                    <div class="px-5 py-3.5 bg-white/3 border-b border-white/5 flex items-center justify-between">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
-                        </div>
-                        <span class="font-mono text-[10px] text-gray-500">ecochat.sh</span>
-                    </div>
-                    
-                    <div class="p-6">
-                        <span class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase" data-i18n="project_pap_cat">// PROJETO PAP</span>
-                        <h3 class="font-display text-lg font-bold text-white mt-1.5 mb-3 group-hover:text-cyber-purple transition-colors cursor-pointer" onclick="openProjectModal('ecochat')" data-i18n="eco_title">
-                            EcoChat (Projeto PAP)
-                        </h3>
-                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="eco_desc">
-                            Aplicação web gamificada de sustentabilidade ecológica que promove a conscientização ambiental com sistema de tarefas práticas e um ranking global competitivo.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="px-6 pb-6 flex flex-col gap-4">
-                    <!-- Tecnologias -->
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">Flask (Python)</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">React + Vite</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">SQLite</span>
-                    </div>
-                    
-                    <!-- Botões de Ação -->
-                    <div class="flex items-center justify-between pt-3.5 border-t border-white/5">
-                        <button onclick="openProjectModal('ecochat')" class="text-xs font-mono font-semibold text-cyber-purple hover:text-white transition-colors" data-i18n="btn_details">
-                            Ver Detalhes
-                        </button>
-                        <a href="https://github.com/LyraPedroDev/Projeto-PAP-2023-26-PedroLyra" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors">
-                            <span data-i18n="btn_view_code">Ver Código</span>
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Cinema MVC -->
-            <div class="glass-card rounded-xl overflow-hidden flex flex-col justify-between h-full group">
-                <div>
-                    <!-- Visualização Simples de Topo do Card -->
-                    <div class="px-5 py-3.5 bg-white/3 border-b border-white/5 flex items-center justify-between">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
-                        </div>
-                        <span class="font-mono text-[10px] text-gray-500">cinema_mvc.cs</span>
-                    </div>
-                    
-                    <div class="p-6">
-                        <span class="text-[10px] font-mono text-cyber-blue tracking-widest uppercase" data-i18n="project_academic_cat">// PROJETO ACADÊMICO</span>
-                        <h3 class="font-display text-lg font-bold text-white mt-1.5 mb-3 group-hover:text-cyber-blue transition-colors cursor-pointer" onclick="openProjectModal('cinema')" data-i18n="cinema_title">
-                            Cinema MVC
-                        </h3>
-                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="cinema_desc">
-                            Sistema completo para gestão de salas de cinema. Implementa controle rígido de acessos, catálogo dinâmico de filmes em exibição e gestão integrada de reservas.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="px-6 pb-6 flex flex-col gap-4">
-                    <!-- Tecnologias -->
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">ASP.NET MVC</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">Entity Framework</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">C#</span>
-                    </div>
-                    
-                    <!-- Botões de Ação -->
-                    <div class="flex items-center justify-between pt-3.5 border-t border-white/5">
-                        <button onclick="openProjectModal('cinema')" class="text-xs font-mono font-semibold text-cyber-blue hover:text-white transition-colors" data-i18n="btn_details">
-                            Ver Detalhes
-                        </button>
-                        <a href="https://github.com/LyraPedroDev/Cinema-Gabriel-Projeto-MVC-2025" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors">
-                            <span data-i18n="btn_view_code">Ver Código</span>
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: LyraBrain -->
-            <div class="glass-card rounded-xl overflow-hidden flex flex-col justify-between h-full group">
-                <div>
-                    <!-- Visualização Simples de Topo do Card -->
-                    <div class="px-5 py-3.5 bg-white/3 border-b border-white/5 flex items-center justify-between">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
-                        </div>
-                        <span class="font-mono text-[10px] text-gray-500">brain.config</span>
-                    </div>
-                    
-                    <div class="p-6">
-                        <span class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase" data-i18n="project_prod_cat">// FLUXO DE PRODUTIVIDADE</span>
-                        <h3 class="font-display text-lg font-bold text-white mt-1.5 mb-3 group-hover:text-cyber-purple transition-colors cursor-pointer" onclick="openProjectModal('lyrabrain')" data-i18n="brain_title">
-                            LyraBrain
-                        </h3>
-                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="brain_desc">
-                            O meu assistente pessoal customizado, desenhado e alimentado pela CLI do Claude Code. Especializado em otimizar e automatizar todo o meu fluxo de trabalho.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="px-6 pb-6 flex flex-col gap-4">
-                    <!-- Tecnologias -->
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">Claude Code</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">Automação</span>
-                        <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300">AI Assistant</span>
-                    </div>
-                    
-                    <!-- Botões de Ação -->
-                    <div class="flex items-center justify-between pt-3.5 border-t border-white/5">
-                        <button onclick="openProjectModal('lyrabrain')" class="text-xs font-mono font-semibold text-cyber-purple hover:text-white transition-colors" data-i18n="btn_details">
-                            Ver Detalhes
-                        </button>
-                        <a href="https://github.com/LyraPedroDev/LyraBrain" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors">
-                            <span data-i18n="btn_view_code">Ver Código</span>
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Grid de Cards de Projetos (Injetados via JS com Border Beam) -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <!-- Os cards são inseridos dinamicamente pela função renderProjects() -->
         </div>
     </section>
 
-    <!-- SECÇÃO: EM DESENVOLVIMENTO 🏗️ -->
+    <!-- SECÇÃO: EM DESENVOLVIMENTO (Lab Exploratório com Border Beam 2.0) -->
     <section id="desenvolvimento" class="py-24 px-6 relative z-10 max-w-6xl mx-auto fade-in-section">
-        
+
         <!-- Cabeçalho -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-4">
             <div>
-                <span class="font-mono text-xs font-bold tracking-widest text-cyber-blue uppercase block mb-2.5" data-i18n="section_dev_badge">// Lab Exploratório</span>
-                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
-                    <span data-i18n="section_dev_title">Em Desenvolvimento</span> <span class="text-xl">🏗️</span>
+                <span class="font-mono text-xs font-bold tracking-widest text-cyber-blue uppercase block mb-2.5"
+                    data-i18n="section_dev_badge">// Em Progresso</span>
+                <h2
+                    class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+                    <span data-i18n="section_dev_title">Espaço de Descobertas</span> <span class="text-xl">🏗️</span>
                 </h2>
             </div>
             <p class="max-w-xs text-gray-400 text-sm leading-relaxed" data-i18n="section_dev_desc">
-                Arquivos ativos e protótipos em fase de planejamento ou desenvolvimento contínuo.
+                Protótipos e laboratórios ativos onde estou testando novas ideias, arquiteturas e interfaces.
             </p>
         </div>
 
-        <!-- 2 Cards mais simples para "em progresso" -->
+        <!-- Cards de Projetos em Progresso -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            
+
             <!-- Card 1: Feijoeiro Mágico -->
-            <div class="glass-card rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
-                <!-- Indicador de Status Neon Pulsação -->
-                <div class="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[9px] text-cyber-purple bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple animate-pulse"></span>
+            <div
+                class="glass-card glass-card-cyan rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
+                <!-- Border Beam -->
+                <div class="border-beam-container border-beam-cyan"></div>
+
+                <!-- Indicador de Status -->
+                <div
+                    class="relative z-10 self-end flex items-center gap-1.5 font-mono text-[9px] text-cyber-pink bg-cyber-pink/10 px-2 py-0.5 rounded border border-cyber-pink/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyber-pink animate-pulse"></span>
                     <span data-i18n="dev_tag_interfaces">INTERFACES</span>
                 </div>
-                
-                <div>
-                    <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-purple transition-colors pr-20" data-i18n="feijoeiro_title">
+
+                <div class="relative z-10 mt-4">
+                    <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-pink transition-colors pr-20"
+                        data-i18n="feijoeiro_title">
                         Feijoeiro Mágico
                     </h3>
                     <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feijoeiro_desc">
-                        Portal institucional premium de alta fidelidade visual desenhado para um berçário/infantário. Foco extremo em UI/UX fluida e animações interativas recorrendo ao Intersection Observer.
+                        Um portal institucional premium desenhado para um berçário/infantário. Um excelente laboratório
+                        para refinar meus estudos em UI/UX e animações com o Intersection Observer.
                     </p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5">
+                <div
+                    class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 mt-auto">
                     <span class="font-mono text-[10px] text-gray-500">Tech: HTML, CSS, Vanilla JS</span>
-                    <a href="https://github.com/LyraPedroDev/FeijoeiroMagico" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors" data-i18n="dev_btn_repo">
-                        Acessar Repositório &rarr;
+                    <a href="https://github.com/LyraPedroDev/FeijoeiroMagico" target="_blank" rel="noopener noreferrer"
+                        aria-label="Acompanhar repositório do Feijoeiro Mágico"
+                        class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
+                        data-i18n="dev_btn_repo">
+                        Acompanhar Repositório &rarr;
                     </a>
                 </div>
             </div>
 
             <!-- Card 2: Casa Nossa Sra. de Fátima -->
-            <div class="glass-card rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
-                <!-- Indicador de Status Neon Pulsação -->
-                <div class="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[9px] text-cyber-blue bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyber-blue animate-pulse"></span>
-                    <span data-i18n="dev_tag_structure">ESTRUTURAÇÃO</span>
+            <div
+                class="glass-card glass-card-cyan rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
+                <!-- Border Beam Variant Blue -->
+                <div class="border-beam-container border-beam-cyan"></div>
+
+                <!-- Indicador de Status -->
+                <div
+                    class="relative z-10 self-end flex items-center gap-1.5 font-mono text-[9px] text-cyber-yellow bg-cyber-yellow/10 px-2 py-0.5 rounded border border-cyber-yellow/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyber-yellow animate-pulse"></span>
+                    <span data-i18n="dev_tag_structure">ARQUITETURA</span>
                 </div>
-                
-                <div>
-                    <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-blue transition-colors pr-20" data-i18n="casa_title">
+
+                <div class="relative z-10 mt-4">
+                    <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-yellow transition-colors pr-20"
+                        data-i18n="casa_title">
                         Casa Nossa Sra. de Fátima
                     </h3>
                     <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="casa_desc">
-                        Novo repositório focado no mapeamento e estruturação da arquitetura base de sistemas. Fase inicial focado em organização técnica limpa e robustez.
+                        Repositório inicial onde estou estudando e estruturando as bases de uma arquitetura modular de
+                        sistemas limpa e sustentável.
                     </p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5">
+                <div
+                    class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 mt-auto">
                     <span class="font-mono text-[10px] text-gray-500">Tech: Arquitetura, Core</span>
-                    <a href="https://github.com/LyraPedroDev/CasaNossaSenhoraDeFatima" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors" data-i18n="dev_btn_repo">
-                        Acessar Repositório &rarr;
+                    <a href="https://github.com/LyraPedroDev/CasaNossaSenhoraDeFatima" target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Acompanhar repositório da Casa Nossa Senhora de Fátima"
+                        class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
+                        data-i18n="dev_btn_repo">
+                        Acompanhar Repositório &rarr;
                     </a>
                 </div>
             </div>
@@ -525,47 +752,57 @@
     <!-- FOOTER / CONECTAR -->
     <footer class="border-t border-white/5 pt-20 pb-12 px-6 relative z-10 bg-[#090A0F]/60">
         <div class="max-w-4xl mx-auto text-center">
-            
-            <!-- Título e Texto (i18n) -->
-            <span class="font-mono text-xs font-bold tracking-widest text-cyber-purple uppercase block mb-3" data-i18n="footer_badge">// Contato</span>
+
+            <!-- Título e Texto -->
+            <span class="font-mono text-xs font-bold tracking-widest text-cyber-purple uppercase block mb-3"
+                data-i18n="footer_badge">// Contato</span>
             <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4" data-i18n="footer_title">
                 Vamos trocar uma ideia?
             </h2>
             <p class="max-w-lg mx-auto text-gray-400 text-sm leading-relaxed mb-6" data-i18n="footer_desc">
-                Sempre aberto a falar sobre segurança cibernética, automação, desenvolvimento ou ideias de negócio. Encontre-me no LinkedIn ou GitHub.
+                Sempre aberto a falar sobre segurança cibernética, automação, desenvolvimento ou ideias de negócio.
+                Encontre-me no LinkedIn ou GitHub.
             </p>
 
-            <!-- Link de E-mail Elegante e Visível -->
+            <!-- Link de E-mail Dinâmico com Cópia Rápida -->
             <div class="mb-10">
-                <a href="mailto:pedro.henrique.lyra17@gmail.com" id="contact-email-btn" class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2 cursor-pointer">
-                    <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-9 11h-3a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2z" />
+                <a href="mailto:pedro.henrique.lyra17@gmail.com" id="contact-email-btn"
+                    aria-label="Copiar endereço de e-mail de Pedro Lyra"
+                    class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2 cursor-pointer btn-interactive">
+                    <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-9 11h-3a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2z" />
                     </svg>
                     <span id="email-text">pedro.henrique.lyra17@gmail.com</span>
                 </a>
             </div>
 
-            <!-- Botões Sociais -->
+            <!-- Botões das Redes Sociais -->
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)]">
+                <a href="https://www.linkedin.com/in/lyrapedro/" target="_blank" rel="noopener noreferrer"
+                    aria-label="Visitar perfil do LinkedIn de Pedro Lyra"
+                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] btn-interactive animate-pulse-glow">
                     LinkedIn
                 </a>
-                <!-- GitHub -->
-                <a href="https://github.com/LyraPedroDev" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-gray-200 hover:text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300">
+                <a href="https://github.com/LyraPedroDev" target="_blank" rel="noopener noreferrer"
+                    aria-label="Visitar perfil do GitHub de Pedro Lyra"
+                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-gray-200 hover:text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 btn-interactive btn-interactive-blue">
                     GitHub
                 </a>
             </div>
 
             <!-- Rodapé Minimalista -->
-            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-500">
-                <p data-i18n="footer_copyright">Pedro Lyra &copy; 2026. Feito com curiosidade.</p>
+            <div
+                class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-500">
+                <p data-i18n="footer_copyright">Pedro Lyra &copy; 2026. Feito com curiosidade e dedicação.</p>
                 <div class="flex gap-4">
-                    <a href="#sobre" class="hover:text-white transition-colors" data-i18n="nav_sobre">Sobre</a>
+                    <a href="#sobre" class="hover:text-white transition-colors footer-link" data-i18n="nav_sobre">Sobre</a>
                     <span>/</span>
-                    <a href="#projetos" class="hover:text-white transition-colors" data-i18n="nav_projetos">Projetos</a>
+                    <a href="#projetos" class="hover:text-white transition-colors footer-link" data-i18n="nav_projetos">Projetos</a>
                     <span>/</span>
-                    <a href="#desenvolvimento" class="hover:text-white transition-colors" data-i18n="nav_desenvolvimento">Lab</a>
+                    <a href="#desenvolvimento" class="hover:text-white transition-colors footer-link"
+                        data-i18n="nav_desenvolvimento">Lab</a>
                 </div>
             </div>
 
@@ -573,38 +810,46 @@
     </footer>
 
     <!-- MODAL INTERATIVO DINÂMICO (Dark Cyber Aesthetic) -->
-    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <!-- Backdrop semitransparente pesado -->
+    <div id="project-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <!-- Backdrop semitransparente -->
         <div id="modal-backdrop" class="absolute inset-0 bg-[#090A0F]/85 backdrop-blur-md"></div>
-        
+
         <!-- Conteúdo do Modal -->
-        <div class="relative w-full max-w-2xl glass-card rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(124,58,237,0.15)] transform scale-95 transition-all duration-300 bg-[#0D0E16]/95 border border-white/10 z-10">
+        <div
+            class="relative w-full max-w-2xl glass-card rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(124,58,237,0.15)] transform scale-95 transition-all duration-300 bg-[#0D0E16]/95 border border-white/10 z-10">
             <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyber-purple to-cyber-blue"></div>
-            
+
             <!-- Header do Modal -->
             <div class="px-6 py-5 border-b border-white/5 flex items-center justify-between">
                 <div>
-                    <span id="modal-project-category" class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase">// CATEGORIA</span>
-                    <h3 id="modal-project-title" class="font-display text-xl font-bold text-white mt-1">Nome do Projeto</h3>
+                    <span id="modal-project-category"
+                        class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase">// CATEGORIA</span>
+                    <h3 id="modal-project-title" class="font-display text-xl font-bold text-white mt-1">Nome do Projeto
+                    </h3>
                 </div>
-                <button id="close-modal-btn" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200" aria-label="Fechar modal">
+                <button id="close-modal-btn"
+                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200"
+                    aria-label="Fechar modal">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-            
+
             <!-- Corpo do Modal -->
             <div class="p-6 sm:p-8 space-y-6">
-                <!-- Seção: Recursos -->
+                <!-- Recursos -->
                 <div class="space-y-3">
-                    <h4 class="font-mono text-xs font-semibold tracking-wider text-gray-400 uppercase" data-i18n="modal_features_title">Recursos do projeto</h4>
+                    <h4 class="font-mono text-xs font-semibold tracking-wider text-gray-400 uppercase"
+                        data-i18n="modal_features_title">O que aprendi neste projeto</h4>
                     <p id="modal-project-details" class="text-gray-300 text-sm sm:text-base leading-relaxed">
                         Detalhes sobre o projeto aqui...
                     </p>
                 </div>
-                
-                <!-- Seção: Stack -->
+
+                <!-- Stack -->
                 <div class="space-y-2.5">
                     <h4 class="font-mono text-xs font-semibold tracking-wider text-gray-400 uppercase">// Stack</h4>
                     <div id="modal-project-tech" class="flex flex-wrap gap-1.5">
@@ -612,16 +857,28 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Footer do Modal -->
-            <div class="px-6 py-4 bg-white/3 border-t border-white/5 flex flex-col sm:flex-row justify-end items-center gap-3">
-                <button id="modal-close-bottom-btn" class="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-gray-300 font-semibold tracking-wider uppercase transition-colors" data-i18n="modal_close_btn">
+
+            <!-- Rodapé do Modal -->
+            <div
+                class="px-6 py-4 bg-white/3 border-t border-white/5 flex flex-col sm:flex-row justify-end items-center gap-3">
+                <button id="modal-close-bottom-btn"
+                    class="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-gray-300 font-semibold tracking-wider uppercase transition-colors"
+                    data-i18n="modal_close_btn">
                     Fechar
                 </button>
-                <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase text-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)]" data-i18n="modal_github_btn">
+                <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer"
+                    class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase text-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)]"
+                    data-i18n="modal_github_btn">
                     Ver no GitHub
                 </a>
-                 const translations = {
+            </div>
+        </div>
+    </div>
+
+    <!-- --- JAVASCRIPT & MOTOR DE ENGINE DIPLOMÁTICO --- -->
+    <script>
+        // --- TRANSLATION DATA (Regionalização estrita pt-BR e en) ---
+        const translations = {
             'pt-BR': {
                 logo: "Pedro Lyra",
                 nav_sobre: "Sobre Mim",
@@ -659,14 +916,25 @@
                 casa_title: "Casa Nossa Sra. de Fátima",
                 casa_desc: "Repositório inicial onde estou estudando e estruturando as bases de uma arquitetura modular de sistemas limpa e sustentável.",
                 dev_btn_repo: "Acompanhar Repositório &rarr;",
-                footer_badge: "// Conectar",
-                footer_title: "Vamos conversar?",
-                footer_desc: "Estou sempre aberto a trocar ideias, compartilhar experiências de aprendizado ou debater sobre segurança cibernética, automação e desenvolvimento. Sinta-se à vontade para me chamar!",
+                footer_badge: "// Contato",
+                footer_title: "Vamos trocar uma ideia?",
+                footer_desc: "Sempre aberto a falar sobre segurança cibernética, automação, desenvolvimento ou ideias de negócio. Encontre-me no LinkedIn ou GitHub.",
                 footer_copyright: "Pedro Lyra &copy; 2026. Feito com curiosidade e dedicação.",
-                modal_features_title: "O que aprendi no projeto",
+                modal_features_title: "O que aprendi neste projeto",
                 modal_close_btn: "Fechar",
                 modal_github_btn: "Ver no GitHub",
-                msg_email_copied: "E-mail copiado!"
+                msg_email_copied: "E-mail copiado!",
+
+                // Novas chaves para o Boot Loader e Terminal
+                loader_initializing: "Inicializando Sistema...",
+                loader_ready: "[ SISTEMA INICIALIZADO ]",
+                term_tab_title: "terminal - pedro@lyra-mint: ~",
+                term_whoami_out: "pedro (sysadmin, desenvolvedor backend, automação)",
+                term_about_out: "Explorador de sistemas, entusiasta em automação inteligente e segurança. Focado em infraestrutura robusta, hardening de sistemas e scripts eficientes.",
+                term_status_1: "[ OK ] Ambiente Linux de desenvolvimento endurecido (Tails OS & Whonix VMs).",
+                term_status_2: "[ OK ] Motor de fluxos inteligentes ativo (n8n & integrações).",
+                term_status_3: "[ OK ] Agente autônomo LyraBrain configurado via Claude Code.",
+                term_status_4: "[ OK ] Porta de escuta aberta para inovação e novos desafios."
             },
             'en': {
                 logo: "Pedro Lyra",
@@ -676,27 +944,27 @@
                 badge_header: "Continuous Learning Journey",
                 hero_tagline_1: "Driven by curiosity.",
                 hero_tagline_2: "Exploring systems and code.",
-                hero_desc: "I'm Pedro, a self-taught young developer fascinated by cybersecurity, Linux, and automation. I dedicate my time to learning and applying technology to build practical solutions, always seeking constant growth. I love taking systems apart to understand how they work inside. This is my digital space where I share my learning journey and what I'm building.",
-                interests_title: "// My Study Focus",
+                hero_desc: "I am Pedro, a young self-taught developer fascinated by cybersecurity, Linux, and automation. I dedicate my time to learning and applying technology to practical solutions, always seeking improvement. I love dismantling systems to deeply understand how they work under the hood. This is my digital space where I share my evolution journey and what I'm building.",
+                interests_title: "// My Focus of Study",
                 section_projects_badge: "// Active Projects",
-                section_projects_title: "What I'm Building",
-                section_projects_desc: "Applications and automation solutions developed to apply technical concepts in practice.",
+                section_projects_title: "What I'm building",
+                section_projects_desc: "Applications and automation solutions that I developed to apply practical concepts.",
                 btn_details: "View Details",
                 btn_view_code: "View Code",
                 project_pap_cat: "// LEARNING PROJECT",
                 project_academic_cat: "// ACADEMIC PROJECT",
                 project_prod_cat: "// PRODUCTIVITY FLOW",
                 eco_title: "EcoChat",
-                eco_desc: "A gamified ecological sustainability web application developed to explore community engagement and hands-on web development.",
-                eco_details: "EcoChat was built as part of my learning journey. The goal was to explore gamification concepts applied to sustainability, encouraging eco-friendly habits. The project challenged me to integrate the Flask (Python) backend with the reactive React (Vite) frontend. For data persistence, I used SQLite, which helped me understand relational modeling of users, tasks, and scores in a simplified and efficient way.",
+                eco_desc: "A gamified ecological sustainability web application developed to explore community engagement and practical web development learning.",
+                eco_details: "EcoChat was built as part of my learning journey. The objective was to explore gamification concepts applied to sustainability, encouraging ecological habits in daily life. The project challenged me in the practical integration between the backend in Flask (Python) and the reactive interface in React (Vite). For data persistence, I used SQLite, which helped me understand relational modeling of user tables, tasks, and scores in a simplified and efficient way.",
                 cinema_title: "Cinema MVC",
-                cinema_desc: "A project aimed at understanding classical MVC architecture and access control, simulating cinema management and ticket reservations.",
-                cinema_details: "Developed as an academic project, Cinema MVC was a great opportunity to explore the MVC (Model-View-Controller) architectural pattern using ASP.NET Core and C#. The technical focus was on understanding business rules, data isolation, and access security. To prevent overbooking in real-time seat reservations, I learned how to use Entity Framework Core to ensure consistent and secure transactions in the database.",
+                cinema_desc: "A project aimed at understanding the classical MVC architecture and access control, simulating the management and reservation of cinema rooms.",
+                cinema_details: "Developed as an academic project, Cinema MVC was an excellent opportunity to explore the MVC (Model-View-Controller) architectural pattern using ASP.NET Core and C#. The technical focus was to understand data isolation business rules and access security. To prevent overbooking in real-time seat reservations, I learned to use Entity Framework Core to ensure consistent and secure database transactions.",
                 brain_title: "LyraBrain",
-                brain_desc: "My customized terminal assistant powered by the Claude Code CLI to optimize and automate my daily study workflow.",
-                brain_details: "LyraBrain was born from my desire to explore the power of autonomous assistants in development. I configured the Claude Code CLI to scan my local study directories, read log files, and run quick infrastructure scripts. This sandbox helped me deeply understand automation concepts in the terminal, allowing me to focus my time on what really matters: learning complex concepts.",
+                brain_desc: "My terminal assistant configured with the Claude Code CLI to optimize and automate my daily study workflow.",
+                brain_details: "LyraBrain was born from my desire to explore the power of autonomous assistants in development. I configured the Claude Code CLI to interact with my local study directories, read log files, and run quick infrastructure scripts. This sandbox helped me deeply understand workflow automation concepts in the terminal, allowing me to focus my time on what really matters: learning complex concepts.",
                 section_dev_badge: "// In Progress",
-                section_dev_title: "Discovery Lab",
+                section_dev_title: "Discovery Space",
                 section_dev_desc: "Active prototypes and sandboxes where I'm testing new ideas, architectures, and interfaces.",
                 dev_tag_interfaces: "INTERFACES",
                 dev_tag_structure: "ARCHITECTURE",
@@ -712,46 +980,118 @@
                 modal_features_title: "What I learned in this project",
                 modal_close_btn: "Close",
                 modal_github_btn: "View on GitHub",
-                msg_email_copied: "Email copied!"
+                msg_email_copied: "Email copied!",
+
+                // New keys for Loader and Terminal
+                loader_initializing: "Initializing System...",
+                loader_ready: "[ SYSTEM READY ]",
+                term_tab_title: "terminal - pedro@lyra-mint: ~",
+                term_whoami_out: "pedro (sysadmin, backend developer, automation)",
+                term_about_out: "Systems explorer, smart automation enthusiast, and security practitioner. Focused on robust infrastructure, systems hardening, and efficient scripting.",
+                term_status_1: "[ OK ] Hardened development Linux environment (Tails OS & Whonix VMs).",
+                term_status_2: "[ OK ] Intelligent automation engine active (n8n & integrations).",
+                term_status_3: "[ OK ] LyraBrain autonomous agent active via Claude Code.",
+                term_status_4: "[ OK ] Listening port active for innovation and new challenges."
             }
         };
 
-        let currentLang = localStorage.getItem('pref-lang') || 'pt-BR';
+        let currentLang = 'pt-BR';
+        try {
+            const savedLang = localStorage.getItem('pref-lang');
+            if (savedLang === 'pt-BR' || savedLang === 'en') {
+                currentLang = savedLang;
+            }
+        } catch (e) {
+            console.warn("localStorage is not accessible. Defaulting to 'pt-BR'.", e);
+        }
+
+        // --- SISTEMA DE TRADUÇÃO RESILIENTE ---
+        function translateElement(el, lang) {
+            const key = el.getAttribute('data-i18n');
+            if (!key || !translations[lang] || !translations[lang][key]) return;
+
+            const translationText = translations[lang][key];
+
+            // Tratamento especial para elementos que contêm ícones (tags SVG) e não podem ser apagados
+            const svg = el.querySelector('svg');
+            if (svg) {
+                const clonedSvg = svg.cloneNode(true);
+                el.textContent = '';
+                el.appendChild(document.createTextNode(translationText + ' '));
+                el.appendChild(clonedSvg);
+            } else {
+                // Prevenção de XSS mantendo a capacidade de renderizar tags específicas se necessário
+                if (translationText.includes('<') && translationText.includes('>')) {
+                    el.innerHTML = translationText;
+                } else {
+                    el.textContent = translationText;
+                }
+            }
+        }
+
+        let isLoaderFinished = false; // Flag global para sincronização
 
         function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('pref-lang', lang);
-            
-            // Atualizar elementos com data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    // Tratar links ou injeção HTML especial
-                    if (el.tagName === 'A' && el.querySelector('svg')) {
-                        const svg = el.querySelector('svg').outerHTML;
-                        el.innerHTML = `${translations[lang][key]} ${svg}`;
-                    } else {
-                        el.innerHTML = translations[lang][key];
-                    }
-                }
-            });
-
-            // Atualizar o botão de alternância do Header
-            const langLabel = document.getElementById('lang-label');
-            const langFlag = document.getElementById('lang-flag');
-            if (lang === 'pt-BR') {
-                langLabel.textContent = 'EN';
-                langFlag.textContent = '🇺🇸';
-            } else {
-                langLabel.textContent = 'PT';
-                langFlag.textContent = '🇧🇷';
+            currentLang = (lang === 'pt-BR' || lang === 'en') ? lang : 'pt-BR';
+            try {
+                localStorage.setItem('pref-lang', currentLang);
+            } catch (e) {
+                console.warn("localStorage is not accessible. Language preference not saved.", e);
             }
 
-            // Se o modal estiver aberto, atualizar o conteúdo dele no novo idioma
+            // 1. Traduz todos os elementos ativos que possuem o data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                translateElement(el, currentLang);
+            });
+
+            // 2. Atualiza o indicador visual do seletor
+            const langLabel = document.getElementById('lang-label');
+            const langFlag = document.getElementById('lang-flag');
+            if (langLabel && langFlag) {
+                if (lang === 'pt-BR') {
+                    langLabel.textContent = 'EN';
+                    langFlag.textContent = '🇺🇸';
+                } else {
+                    langLabel.textContent = 'PT';
+                    langFlag.textContent = '🇧🇷';
+                }
+            }
+
+            // 3. Atualiza o Modal se estiver aberto
             if (activeProjectId) {
                 renderModalData(activeProjectId);
             }
+
+            // 4. Roda novamente a animação do terminal para corresponder ao idioma (apenas após o loader terminar)
+            if (isLoaderFinished && typeof restartTerminalAnimation === 'function') {
+                restartTerminalAnimation();
+            }
         }
+
+        // --- MUTATION OBSERVER PARA ELEMENTOS DINÂMICOS (i18n robusto contra loops) ---
+        const i18nObserver = new MutationObserver((mutations) => {
+            i18nObserver.disconnect(); // Pausa observação temporariamente para evitar loops recursivos
+
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Se o próprio nó adicionado possui data-i18n
+                        if (node.hasAttribute('data-i18n')) {
+                            translateElement(node, currentLang);
+                        }
+                        // Traduz todos os filhos diretos e descendentes
+                        node.querySelectorAll('[data-i18n]').forEach(el => {
+                            translateElement(el, currentLang);
+                        });
+                    }
+                });
+            });
+
+            // Reativa a observação do DOM
+            i18nObserver.observe(document.body, { childList: true, subtree: true });
+        });
+
+        i18nObserver.observe(document.body, { childList: true, subtree: true });
 
         // Event listener do seletor de idioma
         document.getElementById('lang-switch-btn').addEventListener('click', () => {
@@ -759,18 +1099,361 @@
             setLanguage(nextLang);
         });
 
-        // Inicializar Idioma no carregamento
-        document.addEventListener('DOMContentLoaded', () => {
-            setLanguage(currentLang);
-        });
+
+        // --- ESTRUTURA DADOS DOS PROJETOS (ARRAY DINÂMICO) ---
+        const projects = [
+            {
+                id: 'ecochat',
+                tagKey: 'project_pap_cat',
+                titleKey: 'eco_title',
+                descKey: 'eco_desc',
+                filename: 'ecochat.sh',
+                colorClass: 'cyber-purple',
+                borderBeamClass: '',
+                techs: ['Flask (Python)', 'React + Vite', 'SQLite'],
+                github: 'https://github.com/LyraPedroDev/Projeto-PAP-2023-26-PedroLyra'
+            },
+            {
+                id: 'cinema',
+                tagKey: 'project_academic_cat',
+                titleKey: 'cinema_title',
+                descKey: 'cinema_desc',
+                filename: 'cinema_mvc.cs',
+                colorClass: 'cyber-blue',
+                borderBeamClass: 'border-beam-blue',
+                techs: ['ASP.NET Core MVC', 'EF Core', 'C#'],
+                github: 'https://github.com/LyraPedroDev/Cinema-Gabriel-Projeto-MVC-2025'
+            },
+            {
+                id: 'lyrabrain',
+                tagKey: 'project_prod_cat',
+                titleKey: 'brain_title',
+                descKey: 'brain_desc',
+                filename: 'brain.config',
+                colorClass: 'cyber-purple',
+                borderBeamClass: '',
+                techs: ['Claude Code', 'Automação', 'AI Assistant'],
+                github: 'https://github.com/LyraPedroDev/LyraBrain'
+            }
+        ];
+
+        // --- RENDERIZADOR DINÂMICO DE PROJETOS (Com Border Beam 2.0) ---
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            projects.forEach(proj => {
+                const borderClass = proj.colorClass === 'cyber-blue' ? 'glass-card-blue' : '';
+                const accentText = proj.colorClass === 'cyber-blue' ? 'text-cyber-blue' : 'text-cyber-purple';
+                const hoverAccentText = proj.colorClass === 'cyber-blue' ? 'group-hover:text-cyber-blue' : 'group-hover:text-cyber-purple';
+
+                // Criação estrutural do Card
+                const card = document.createElement('div');
+                card.className = `glass-card ${borderClass} rounded-xl overflow-hidden flex flex-col justify-between h-full group`;
+
+                // Border Beam Container
+                const beamContainer = document.createElement('div');
+                beamContainer.className = `border-beam-container ${proj.borderBeamClass}`;
+                card.appendChild(beamContainer);
+
+                // Conteúdo interno
+                const innerContainer = document.createElement('div');
+                innerContainer.className = "relative z-10 flex flex-col justify-between h-full";
+
+                // Barra Superior do Card
+                const topBar = document.createElement('div');
+                topBar.className = "px-5 py-3.5 bg-white/3 border-b border-white/5 flex items-center justify-between select-none";
+                topBar.innerHTML = `
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
+                    </div>
+                    <span class="font-mono text-[10px] text-gray-500">${proj.filename}</span>
+                `;
+                innerContainer.appendChild(topBar);
+
+                // Área de Textos
+                const bodyContent = document.createElement('div');
+                bodyContent.className = "p-6";
+                bodyContent.innerHTML = `
+                    <span class="text-[10px] font-mono ${accentText} tracking-widest uppercase" data-i18n="${proj.tagKey}"></span>
+                    <h3 class="font-display text-lg font-bold text-white mt-1.5 mb-3 ${hoverAccentText} transition-colors cursor-pointer" onclick="openProjectModal('${proj.id}')" data-i18n="${proj.titleKey}"></h3>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="${proj.descKey}"></p>
+                `;
+                innerContainer.appendChild(bodyContent);
+
+                // Rodapé com Techs & Ações
+                const footerContent = document.createElement('div');
+                footerContent.className = "px-6 pb-6 flex flex-col gap-4 mt-auto";
+
+                const techsDiv = document.createElement('div');
+                techsDiv.className = "flex flex-wrap gap-1.5";
+                proj.techs.forEach(tech => {
+                    const badge = document.createElement('span');
+                    badge.className = "font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/5 text-gray-300";
+                    badge.textContent = tech;
+                    techsDiv.appendChild(badge);
+                });
+                footerContent.appendChild(techsDiv);
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = "flex items-center justify-between pt-3.5 border-t border-white/5";
+                actionsDiv.innerHTML = `
+                    <button onclick="openProjectModal('${proj.id}')" class="text-xs font-mono font-semibold ${accentText} hover:text-white transition-colors" data-i18n="btn_details">
+                        Ver Detalhes
+                    </button>
+                    <a href="${proj.github}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors">
+                        <span data-i18n="btn_view_code">Ver Código</span>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                        </svg>
+                    </a>
+                `;
+                footerContent.appendChild(actionsDiv);
+                innerContainer.appendChild(footerContent);
+                card.appendChild(innerContainer);
+                grid.appendChild(card);
+            });
+        }
 
 
-        // --- SISTEMA DE MODAIS INTERATIVOS (Microinterações) ---
+        // --- SCRIPT DO TERMINAL INTERATIVO (Autenticidade técnica baseada em logs reais) ---
+        let terminalTimeoutId = null;
+        let terminalIntervalId = null;
+
+        function restartTerminalAnimation() {
+            // Limpa intervalos e timeouts anteriores para evitar corridas
+            if (terminalTimeoutId) clearTimeout(terminalTimeoutId);
+            if (terminalIntervalId) clearInterval(terminalIntervalId);
+
+            const termBody = document.getElementById('terminal-body');
+            if (!termBody) return;
+            termBody.innerHTML = '';
+
+            // Banner ASCII do Assistente LyraBrain
+            const asciiBanner = `
+  _                      ____            _       
+ | |    _   _ _ __ __ _ | __ ) _ __ __ _(_)_ __  
+ | |   | | | | '__/ _\` ||  _ \\| '__/ _\` | | '_ \\ 
+ | |___| |_| | | | (_| || |_) | | | (_| | | | | |
+ |_____|\\__, |_|  \\__,_||____/|_|  \\__,_|_|_| |_|
+        |___/                                    
+`;
+
+            // Roteiro do terminal com comandos e logs correspondentes
+            const steps = [
+                { type: 'command', text: 'whoami' },
+                { type: 'output', text: translations[currentLang]['term_whoami_out'] },
+                { type: 'command', text: currentLang === 'pt-BR' ? 'cat sobre.txt' : 'cat about.txt' },
+                { type: 'output', text: translations[currentLang]['term_about_out'] },
+                { type: 'command', text: 'lyrabrain --init' },
+                { type: 'banner', text: asciiBanner, logs: currentLang === 'pt-BR' ? [
+                    "[SYSTEM] LyraBrain AI Core inicializado com sucesso.",
+                    "[SYSTEM] Provedor: Claude 3.5 Sonnet executando em modo CLI local.",
+                    "[SYSTEM] Diretório Ativo: /home/pedro/documents/studies",
+                    "[SYSTEM] Integridade de rede ativa (Vozes de logs canalizadas via Whonix/Tor)."
+                ] : [
+                    "[SYSTEM] LyraBrain AI Core initialized successfully.",
+                    "[SYSTEM] Model: Claude 3.5 Sonnet executing via local CLI.",
+                    "[SYSTEM] Working Directory: /home/pedro/documents/studies",
+                    "[SYSTEM] Network integrity secure (Log voices routed via Whonix/Tor)."
+                ]},
+                { type: 'command', text: './status.sh' },
+                { type: 'status', lines: [
+                    translations[currentLang]['term_status_1'],
+                    translations[currentLang]['term_status_2'],
+                    translations[currentLang]['term_status_3'],
+                    translations[currentLang]['term_status_4']
+                ]}
+            ];
+
+            let stepIdx = 0;
+
+            function createPromptLine() {
+                const promptLine = document.createElement('span');
+                promptLine.className = 'text-cyber-blue font-bold mr-2';
+                promptLine.textContent = 'pedro@lyra-mint:~$';
+                return promptLine;
+            }
+
+            function processStep() {
+                if (stepIdx >= steps.length) {
+                    // Script finalizado, adiciona linha de comando vazia com cursor piscando
+                    const endLine = document.createElement('div');
+                    endLine.className = 'flex items-center';
+                    endLine.appendChild(createPromptLine());
+                    
+                    const cursor = document.createElement('span');
+                    cursor.className = 'w-2 h-4 bg-cyber-blue animate-pulse ml-0.5 inline-block';
+                    endLine.appendChild(cursor);
+                    
+                    termBody.appendChild(endLine);
+                    termBody.scrollTop = termBody.scrollHeight;
+                    return;
+                }
+
+                const step = steps[stepIdx];
+                stepIdx++;
+
+                if (step.type === 'command') {
+                    const line = document.createElement('div');
+                    line.className = 'flex items-center';
+                    line.appendChild(createPromptLine());
+                    
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'text-white font-medium';
+                    line.appendChild(textSpan);
+                    termBody.appendChild(line);
+                    
+                    let charIdx = 0;
+                    terminalIntervalId = setInterval(() => {
+                        if (charIdx < step.text.length) {
+                            textSpan.textContent += step.text[charIdx];
+                            charIdx++;
+                            termBody.scrollTop = termBody.scrollHeight;
+                        } else {
+                            clearInterval(terminalIntervalId);
+                            terminalTimeoutId = setTimeout(processStep, 500);
+                        }
+                    }, 65);
+                } 
+                else if (step.type === 'output') {
+                    const line = document.createElement('div');
+                    line.className = 'text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]';
+                    line.textContent = step.text;
+                    termBody.appendChild(line);
+                    termBody.scrollTop = termBody.scrollHeight;
+                    terminalTimeoutId = setTimeout(processStep, 700);
+                } 
+                else if (step.type === 'banner') {
+                    // Injeta o Banner ASCII
+                    const bannerPre = document.createElement('pre');
+                    bannerPre.className = 'text-cyber-purple font-bold text-[9px] leading-tight select-none py-2';
+                    bannerPre.textContent = step.text;
+                    termBody.appendChild(bannerPre);
+                    
+                    // Injeta logs de boot do assistente
+                    const logContainer = document.createElement('div');
+                    logContainer.className = 'text-emerald-400/90 font-mono text-[10px] pl-4 space-y-1 py-1.5 border-l border-emerald-500/20';
+                    step.logs.forEach(logLine => {
+                        const p = document.createElement('p');
+                        p.textContent = logLine;
+                        logContainer.appendChild(p);
+                    });
+                    termBody.appendChild(logContainer);
+                    
+                    termBody.scrollTop = termBody.scrollHeight;
+                    terminalTimeoutId = setTimeout(processStep, 1000);
+                } 
+                else if (step.type === 'status') {
+                    const statusContainer = document.createElement('div');
+                    statusContainer.className = 'space-y-1 pl-4 py-1';
+                    termBody.appendChild(statusContainer);
+                    
+                    let lineIdx = 0;
+                    function printStatus() {
+                        if (lineIdx < step.lines.length) {
+                            const p = document.createElement('p');
+                            const textLine = step.lines[lineIdx];
+                            
+                            if (textLine.startsWith('[ OK ]')) {
+                                p.innerHTML = `<span class="text-emerald-400 font-bold">[ OK ]</span> ${textLine.substring(6)}`;
+                            } else {
+                                p.textContent = textLine;
+                            }
+                            
+                            statusContainer.appendChild(p);
+                            termBody.scrollTop = termBody.scrollHeight;
+                            lineIdx++;
+                            terminalTimeoutId = setTimeout(printStatus, 350);
+                        } else {
+                            terminalTimeoutId = setTimeout(processStep, 600);
+                        }
+                    }
+                    printStatus();
+                }
+            }
+
+            processStep();
+        }
+
+
+        // --- LÓGICA DO BOOT LOADER DE SISTEMA (Simulador de Inicialização com Fallback) ---
+        let progressVal = 0;
+        let progressInterval;
+
+        const finishLoading = () => {
+            if (isLoaderFinished) return;
+            isLoaderFinished = true;
+            
+            if (progressInterval) clearInterval(progressInterval);
+            progressVal = 100;
+            
+            const progressEl = document.getElementById('loader-progress');
+            if (progressEl) progressEl.style.width = '100%';
+            
+            const loaderText = document.getElementById('loader-text');
+            if (loaderText) {
+                loaderText.setAttribute('data-i18n', 'loader_ready');
+                const readyText = (translations[currentLang] && translations[currentLang]['loader_ready']) 
+                    ? translations[currentLang]['loader_ready'] 
+                    : '[ SISTEMA INICIALIZADO ]';
+                loaderText.textContent = readyText;
+            }
+            
+            // Suave transição de saída da tela de boot
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                if (loader) {
+                    loader.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        
+                        // DISPARA ANIMAÇÃO DO TERMINAL SOMENTE APÓS O LOADER SUMIR TOTALMENTE!
+                        if (typeof restartTerminalAnimation === 'function') {
+                            restartTerminalAnimation();
+                        }
+                    }, 700);
+                } else {
+                    if (typeof restartTerminalAnimation === 'function') {
+                        restartTerminalAnimation();
+                    }
+                }
+            }, 600);
+        };
+
+        (function() {
+            const progressEl = document.getElementById('loader-progress');
+            const updateProgress = () => {
+                if (progressEl) progressEl.style.width = `${progressVal}%`;
+            };
+            
+            progressInterval = setInterval(() => {
+                if (progressVal < 90) {
+                    progressVal += Math.floor(Math.random() * 12) + 4; // avanço gradualmente mais rápido
+                    if (progressVal > 90) progressVal = 90;
+                    updateProgress();
+                }
+            }, 80);
+
+            // Failsafe / Timeout de Segurança Absoluta (Máximo 2.5s de exibição sob qualquer condição)
+            setTimeout(() => {
+                if (!isLoaderFinished) {
+                    console.warn("Loader safety timeout triggered. Forcing finish.");
+                    finishLoading();
+                }
+            }, 2500);
+        })();
+
+
+        // --- SISTEMA DE MODAIS INTERATIVOS (Microinterações de Projetos) ---
         let activeProjectId = null;
 
         const projectTechMap = {
             'ecochat': ['Flask (Python)', 'React + Vite', 'SQLite'],
-            'cinema': ['ASP.NET Core MVC', 'Entity Framework', 'C#'],
+            'cinema': ['ASP.NET Core MVC', 'EF Core', 'C#'],
             'lyrabrain': ['Claude Code', 'Automação', 'AI Assistant']
         };
 
@@ -781,7 +1464,7 @@
         };
 
         const modal = document.getElementById('project-modal');
-        const modalContainer = modal.querySelector('.glass-card');
+        const modalContainer = modal ? modal.querySelector('.glass-card') : null;
         const backdrop = document.getElementById('modal-backdrop');
 
         function renderModalData(projectId) {
@@ -791,93 +1474,112 @@
             const techContainer = document.getElementById('modal-project-tech');
             const githubLink = document.getElementById('modal-github-link');
 
+            if (!categoryEl || !titleEl || !detailsEl || !techContainer || !githubLink) return;
+
             // Determinar chaves de tradução dinâmicas
             let catKey = '';
-            if (projectId === 'ecochat') catKey = 'project_pap_cat';
-            else if (projectId === 'cinema') catKey = 'project_academic_cat';
-            else if (projectId === 'lyrabrain') catKey = 'project_prod_cat';
+            let titleKey = '';
+            let detailsKey = '';
+            if (projectId === 'ecochat') {
+                catKey = 'project_pap_cat';
+                titleKey = 'eco_title';
+                detailsKey = 'eco_details';
+            } else if (projectId === 'cinema') {
+                catKey = 'project_academic_cat';
+                titleKey = 'cinema_title';
+                detailsKey = 'cinema_details';
+            } else if (projectId === 'lyrabrain') {
+                catKey = 'project_prod_cat';
+                titleKey = 'brain_title';
+                detailsKey = 'brain_details';
+            }
 
-            // Atualizar textos baseados no idioma selecionado
-            categoryEl.textContent = translations[currentLang][catKey];
-            titleEl.textContent = translations[currentLang][`${projectId}_title`] || projectId;
-            detailsEl.textContent = translations[currentLang][`${projectId}_details`];
-            githubLink.href = projectLinkMap[projectId];
+            // Atualiza textos baseados no idioma
+            categoryEl.textContent = translations[currentLang][catKey] || '';
+            titleEl.textContent = translations[currentLang][titleKey] || projectId;
+            detailsEl.textContent = translations[currentLang][detailsKey] || '';
+            githubLink.href = projectLinkMap[projectId] || '#';
 
-            // Renderizar as tecnologias (Badges)
+            // Renderização das Tecnologias
             techContainer.innerHTML = '';
-            projectTechMap[projectId].forEach(tech => {
-                const badge = document.createElement('span');
-                badge.className = "font-mono text-xs px-2.5 py-1 rounded bg-white/5 border border-white/5 text-gray-300";
-                badge.textContent = tech;
-                techContainer.appendChild(badge);
-            });
+            if (projectTechMap[projectId]) {
+                projectTechMap[projectId].forEach(tech => {
+                    const badge = document.createElement('span');
+                    badge.className = "font-mono text-xs px-2.5 py-1 rounded bg-white/5 border border-white/5 text-gray-300";
+                    badge.textContent = tech;
+                    techContainer.appendChild(badge);
+                });
+            }
         }
 
         function openProjectModal(projectId) {
             activeProjectId = projectId;
             renderModalData(projectId);
 
-            // Bloquear scroll do fundo
+            // Bloquear scroll de fundo
             document.body.style.overflow = 'hidden';
 
-            // Remover invisibilidade e pointer-events
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            
-            // scale-in suave com microinteração premium
-            setTimeout(() => {
-                modalContainer.classList.remove('scale-95');
-                modalContainer.classList.add('scale-100');
-            }, 10);
+            if (modal && modalContainer) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modalContainer.classList.remove('scale-95');
+                    modalContainer.classList.add('scale-100');
+                }, 10);
+            }
         }
 
         function closeProjectModal() {
             activeProjectId = null;
 
-            // Suave scale-out
-            modalContainer.classList.remove('scale-100');
-            modalContainer.classList.add('scale-95');
+            if (modal && modalContainer) {
+                modalContainer.classList.remove('scale-100');
+                modalContainer.classList.add('scale-95');
 
-            // Fade-out do modal wrapper completo
-            setTimeout(() => {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                // Liberar scroll do fundo
-                document.body.style.overflow = '';
-            }, 150);
+                setTimeout(() => {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    document.body.style.overflow = '';
+                }, 150);
+            }
         }
 
-        // Vincular eventos de fechamento
-        document.getElementById('close-modal-btn').addEventListener('click', closeProjectModal);
-        document.getElementById('modal-close-bottom-btn').addEventListener('click', closeProjectModal);
-        backdrop.addEventListener('click', closeProjectModal);
-
-        // Suporte a fechamento com a tecla ESC para excelente acessibilidade
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && activeProjectId) {
-                closeProjectModal();
-            }
-        });
+        // Event listeners do Modal
+        if (modal) {
+            document.getElementById('close-modal-btn').addEventListener('click', closeProjectModal);
+            document.getElementById('modal-close-bottom-btn').addEventListener('click', closeProjectModal);
+            if (backdrop) backdrop.addEventListener('click', closeProjectModal);
+            
+            // Tecla ESC para acessibilidade
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && activeProjectId) {
+                    closeProjectModal();
+                }
+            });
+        }
 
 
         // --- COMPORTAMENTOS AUXILIARES ---
 
-        // Menu de Navegação Mobile Toggle
+        // Menu Mobile Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        });
+
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
 
         // Transição suave no Header ao fazer Scroll
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
+            if (!nav) return;
             if (window.scrollY > 40) {
                 nav.classList.add('py-3.5');
                 nav.classList.remove('py-5');
@@ -889,46 +1591,67 @@
             }
         });
 
-        // IntersectionObserver para Animar Entrada de Secções
+        // IntersectionObserver Altamente Otimizado
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Libera o listener uma vez carregado
                 }
             });
         }, {
-            threshold: 0.08
+            rootMargin: '0px 0px -50px 0px',
+            threshold: 0.05
         });
 
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
         });
 
-        // --- LÓGICA DE COPIAR E-MAIL COM FEEDBACK VISUAL ---
+        // --- SISTEMA DE COPIAR E-MAIL COM FEEDBACK VISUAL ---
         const emailBtn = document.getElementById('contact-email-btn');
         const emailText = document.getElementById('email-text');
         const emailAddress = "pedro.henrique.lyra17@gmail.com";
         let isCopying = false;
 
-        emailBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Previne a abertura do cliente de e-mail local (mailto)
-            if (isCopying) return;
+        if (emailBtn && emailText) {
+            emailBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (isCopying) return;
 
-            isCopying = true;
-            navigator.clipboard.writeText(emailAddress).then(() => {
-                // Altera o texto para a mensagem traduzida temporariamente
-                emailText.textContent = translations[currentLang]['msg_email_copied'];
-                
-                // Restaura o e-mail após 2 segundos
-                setTimeout(() => {
-                    emailText.textContent = emailAddress;
+                isCopying = true;
+                navigator.clipboard.writeText(emailAddress).then(() => {
+                    // Traduz visualmente a mensagem de confirmação
+                    emailText.textContent = translations[currentLang]['msg_email_copied'];
+                    
+                    setTimeout(() => {
+                        emailText.textContent = emailAddress;
+                        isCopying = false;
+                    }, 2000);
+                }).catch(err => {
+                    console.error("Falha ao copiar o e-mail: ", err);
                     isCopying = false;
-                }, 2000);
-            }).catch(err => {
-                console.error("Falha ao copiar o e-mail: ", err);
-                isCopying = false;
+                });
             });
+        }
+
+
+        // --- INICIALIZAÇÃO COMPLETA & SINCRONIZAÇÃO DE SCRIPTS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Renderiza os cards de projetos dinamicamente
+            renderProjects();
+            
+            // 2. Define idioma preferido inicial (PT-BR ou EN) e traduz todo o HTML
+            setLanguage(currentLang);
+        });
+
+        // Finaliza o loader após todos os recursos estarem carregados
+        window.addEventListener('load', () => {
+            if (!isLoaderFinished) {
+                finishLoading();
+            }
         });
     </script>
 </body>
+
 </html>

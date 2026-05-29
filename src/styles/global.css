@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   FONT SYSTEM (Anti-CLS com font-display: swap)
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: local('Outfit'), local('Outfit-Regular'), sans-serif;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: local('Plus Jakarta Sans'), local('PlusJakartaSans'), sans-serif;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: local('JetBrains Mono'), local('JetBrainsMono'), monospace;
+}
+
+/* ==========================================================================
+   BASE & THEME LAYERS
+   ========================================================================== */
+
+@layer base {
+  body {
+    background-color: #090A0F;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: #E5E7EB;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus Outlines Acessíveis WCAG AA */
+  *:focus-visible {
+    outline: 2px solid #7C3AED !important;
+    outline-offset: 4px !important;
+  }
+}
+
+@layer utilities {
+  /* Efeito de Grelha Cibernética de Fundo */
+  .tech-grid {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  }
+
+  /* Glassmorphism Premium 2.0 */
+  .glass-card {
+    position: relative;
+    background: rgba(13, 14, 22, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Fator de composição acelerado na GPU para Orbes */
+  .gpu-composited {
+    transform: translate3d(0, 0, 0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Animações de Orbes (Física Fluida GPU) */
+  @keyframes float-purple {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(0, -30px, 0) scale(1.06) rotate(6deg); }
+  }
+
+  @keyframes float-blue {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(0, -40px, 0) scale(0.94) rotate(-6deg); }
+  }
+
+  @keyframes float-cyan {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(0, -25px, 0) scale(1.03) rotate(4deg); }
+  }
+
+  .animate-float-purple {
+    animation: float-purple 12s ease-in-out infinite;
+  }
+
+  .animate-float-blue {
+    animation: float-blue 15s ease-in-out infinite;
+  }
+
+  .animate-float-cyan {
+    animation: float-cyan 9s ease-in-out infinite;
+  }
+
+  /* ==========================================================================
+     BORDER BEAM SVG VECTOR OPTIMIZATION (Zero Idle GPU Power)
+     ========================================================================== */
+  .border-beam-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 10;
+  }
+
+  .border-beam-rect {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-dasharray: 120 600;
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.4s ease, 
+                stroke 0.3s ease;
+  }
+
+  .glass-card:hover .border-beam-rect {
+    stroke-dashoffset: -320;
+    opacity: 0.9;
+  }
+
+  /* ==========================================================================
+     MICRO-INTERAÇÕES & LINKS
+     ========================================================================== */
+  .btn-interactive {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .btn-interactive:hover {
+    transform: scale(1.05) translate3d(0, -2px, 0);
+  }
+
+  .footer-link {
+    position: relative;
+  }
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .footer-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
+/* ==========================================================================
+   SUPORTE A PREFERS-REDUCED-MOTION (Acessibilidade Sensorial)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-purple,
+  .animate-float-blue,
+  .animate-float-cyan,
+  .border-beam-rect,
+  .btn-interactive,
+  .glass-card {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  .border-beam-rect {
+    opacity: 0.4 !important;
+    stroke-dasharray: none !important;
+  }
+}

@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  id?: string;
+  style?: string;
+  theme?: 'purple' | 'blue' | 'cyan';
+}
+
+const {
+  class: className = '',
+  id,
+  style = '',
+  theme = 'purple',
+} = Astro.props;
+
+const themeClasses = {
+  purple: 'hover:border-cyber-purple/40',
+  blue: 'glass-card-blue hover:border-cyber-blue/40',
+  cyan: 'glass-card-cyan hover:border-cyber-cyan/40',
+};
+---
+
+<div
+  id={id}
+  style={style}
+  class={`glass-card rounded-xl overflow-hidden flex flex-col justify-between h-full group ${themeClasses[theme]} ${className}`}
+>
+  <slot />
+</div>
