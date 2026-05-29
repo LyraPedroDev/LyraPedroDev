@@ -71,6 +71,14 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Glassmorphism Premium Navbar */
+  .glass-nav {
+    background: rgba(9, 10, 15, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
   /* Fator de composição acelerado na GPU para Orbes */
   .gpu-composited {
     transform: translate3d(0, 0, 0);
@@ -126,15 +134,55 @@
     stroke-linecap: round;
     stroke-dasharray: 120 600;
     stroke-dashoffset: 0;
-    opacity: 0.2;
-    transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.4s ease, 
-                stroke 0.3s ease;
+    opacity: 0.1;
+    transition: opacity 0.4s ease, stroke 0.3s ease;
+    will-change: stroke-dashoffset;
   }
 
-  .glass-card:hover .border-beam-rect {
-    stroke-dashoffset: -320;
-    opacity: 0.9;
+  /* Animação ativa APENAS em hover para zero idle GPU */
+  .group:hover .border-beam-rect {
+    animation: border-beam 3s linear infinite;
+    opacity: 0.95;
+  }
+
+  @keyframes border-beam {
+    0% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -720;
+    }
+  }
+
+  /* ==========================================================================
+     TERMINAL SEQUENTIAL TYPING ANIMATIONS (Pure CSS & 60 FPS)
+     ========================================================================== */
+  @keyframes terminal-typing {
+    from { width: 0; }
+    to { width: calc(var(--char-count) * 1ch); }
+  }
+
+  @keyframes terminal-blink {
+    50% { border-color: #06B6D4; }
+  }
+
+  @keyframes terminal-reveal {
+    from { opacity: 0; transform: translate3d(0, 4px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  @keyframes terminal-reveal-instant {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes terminal-blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .animate-terminal-blink {
+    animation: terminal-blink-cursor 1s step-end infinite;
   }
 
   /* ==========================================================================
@@ -175,12 +223,20 @@
   .animate-float-purple,
   .animate-float-blue,
   .animate-float-cyan,
-  .border-beam-rect,
   .btn-interactive,
-  .glass-card {
+  .glass-card,
+  .group:hover .border-beam-rect,
+  .terminal-command,
+  .terminal-output,
+  .terminal-output-container,
+  .terminal-output p,
+  .animate-terminal-blink {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+    opacity: 1 !important;
+    width: auto !important;
+    border-right: none !important;
   }
   .border-beam-rect {
     opacity: 0.4 !important;

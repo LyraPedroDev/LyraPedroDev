@@ -1,79 +1,13 @@
 ---
+import { t } from '../../i18n/utils';
+
 interface Props {
   lang?: 'pt-BR' | 'en';
 }
 
 const { lang = 'pt-BR' } = Astro.props;
 
-// Tradução local estática pré-compilada para o terminal
-const termTranslations = {
-  'pt-BR': {
-    term_tab_title: 'terminal - pedro@lyra-mint: ~',
-    term_whoami_out: 'pedro (sysadmin, desenvolvedor backend, automação)',
-    term_about_out: 'Explorador de sistemas, entusiasta em automação inteligente e segurança. Focado em infraestrutura robusta, hardening de sistemas e scripts eficientes.',
-    term_status_1: '[ OK ] Ambiente Linux de desenvolvimento endurecido (Tails OS & Whonix VMs).',
-    term_status_2: '[ OK ] Motor de fluxos inteligentes ativo (n8n & integrações).',
-    term_status_3: '[ OK ] Agente autônomo LyraBrain configurado via Claude Code.',
-    term_status_4: '[ OK ] Porta de escuta aberta para inovação e novos desafios.'
-  },
-  'en': {
-    term_tab_title: 'terminal - pedro@lyra-mint: ~',
-    term_whoami_out: 'pedro (sysadmin, backend developer, automation)',
-    term_about_out: 'Systems explorer, smart automation enthusiast, and security practitioner. Focused on robust infrastructure, systems hardening, and efficient scripting.',
-    term_status_1: '[ OK ] Hardened development Linux environment (Tails OS & Whonix VMs).',
-    term_status_2: '[ OK ] Intelligent automation engine active (n8n & integrations).',
-    term_status_3: '[ OK ] LyraBrain autonomous agent active via Claude Code.',
-    term_status_4: '[ OK ] Listening port active for innovation and new challenges.'
-  }
-};
-
-const activeTrans = termTranslations[lang];
----
-
-<div
-  class="glass-card rounded-xl overflow-hidden border border-white/5 text-left font-mono text-xs shadow-2xl relative w-full"
-  data-terminal-lang={lang}
-  data-terminal-translations={JSON.stringify(activeTrans)}
->
-  <!-- Cabeçalho do Terminal -->
-  <div class="relative z-10 px-4 py-3 bg-[#0d0e16]/80 border-b border-white/5 flex items-center justify-between select-none">
-    <div class="flex items-center gap-2">
-      <span class="w-3 h-3 rounded-full bg-red-500/60 inline-block" aria-hidden="true"></span>
-      <span class="w-3 h-3 rounded-full bg-yellow-500/50 inline-block" aria-hidden="true"></span>
-      <span class="w-3 h-3 rounded-full bg-emerald-500/50 inline-block" aria-hidden="true"></span>
-    </div>
-    <span class="text-[10px] text-gray-500 tracking-wider">{activeTrans.term_tab_title}</span>
-    <span class="text-[10px] text-gray-400 font-semibold">bash</span>
-  </div>
-  
-  <!-- Corpo do Terminal com aria-live para acessibilidade WCAG AA -->
-  <div
-    id="terminal-body"
-    class="relative z-10 p-5 space-y-3 bg-[#090A0F]/85 min-h-[350px] text-gray-300 overflow-x-auto leading-relaxed max-h-[400px] select-text"
-    aria-live="polite"
-  >
-    <!-- As linhas de comando e logs do sistema serão injetados dinamicamente via script encapsulado -->
-  </div>
-</div>
-
-<script>
-  // Controlador encapsulado do Terminal de alta performance que executa unicamente no cliente
-  class TerminalController {
-    constructor(element) {
-      this.container = element;
-      this.termBody = element.querySelector('#terminal-body');
-      this.lang = element.dataset.terminalLang;
-      this.translations = JSON.parse(element.dataset.terminalTranslations);
-      
-      this.terminalTimeoutId = null;
-      this.terminalIntervalId = null;
-      
-      this.init();
-    }
-    
-    init() {
-      // Banner ASCII do Assistente LyraBrain (Escapado perfeitamente para evitar erros de sintaxe)
-      const asciiBanner = `
+const asciiBanner = `
   _                      ____            _       
  | |    _   _ _ __ __ _ | __ ) _ __ __ _(_)_ __  
  | |   | | | | '__/ _\` ||  _ \\| '__/ _\` | | '_ \\ 
@@ -82,141 +16,137 @@ const activeTrans = termTranslations[lang];
         |___/                                    
 `;
 
-      this.steps = [
-        { type: 'command', text: 'whoami' },
-        { type: 'output', text: this.translations.term_whoami_out },
-        { type: 'command', text: this.lang === 'pt-BR' ? 'cat sobre.txt' : 'cat about.txt' },
-        { type: 'output', text: this.translations.term_about_out },
-        { type: 'command', text: 'lyrabrain --init' },
-        { type: 'banner', text: asciiBanner, logs: this.lang === 'pt-BR' ? [
-            "[SYSTEM] LyraBrain AI Core inicializado com sucesso.",
-            "[SYSTEM] Provedor: Claude 3.5 Sonnet executando em modo CLI local.",
-            "[SYSTEM] Diretório Ativo: /home/pedro/documents/studies",
-            "[SYSTEM] Integridade de rede ativa (Vozes de logs canalizadas via Whonix/Tor)."
-        ] : [
-            "[SYSTEM] LyraBrain AI Core initialized successfully.",
-            "[SYSTEM] Model: Claude 3.5 Sonnet executing via local CLI.",
-            "[SYSTEM] Working Directory: /home/pedro/documents/studies",
-            "[SYSTEM] Network integrity secure (Log voices routed via Whonix/Tor)."
-        ]},
-        { type: 'command', text: './status.sh' },
-        { type: 'status', lines: [
-            this.translations.term_status_1,
-            this.translations.term_status_2,
-            this.translations.term_status_3,
-            this.translations.term_status_4
-        ]}
-      ];
-      
-      this.stepIdx = 0;
-      this.processStep();
-    }
-    
-    createPromptLine() {
-      const promptLine = document.createElement('span');
-      promptLine.className = 'text-cyber-blue font-bold mr-2';
-      promptLine.textContent = 'pedro@lyra-mint:~$';
-      return promptLine;
-    }
-    
-    processStep() {
-      if (this.stepIdx >= this.steps.length) {
-        const endLine = document.createElement('div');
-        endLine.className = 'flex items-center';
-        endLine.appendChild(this.createPromptLine());
-        
-        const cursor = document.createElement('span');
-        cursor.className = 'w-2 h-4 bg-cyber-blue animate-pulse ml-0.5 inline-block';
-        endLine.appendChild(cursor);
-        
-        this.termBody.appendChild(endLine);
-        this.termBody.scrollTop = this.termBody.scrollHeight;
-        return;
-      }
-      
-      const step = this.steps[this.stepIdx];
-      this.stepIdx++;
-      
-      if (step.type === 'command') {
-        const line = document.createElement('div');
-        line.className = 'flex items-center';
-        line.appendChild(this.createPromptLine());
-        
-        const textSpan = document.createElement('span');
-        textSpan.className = 'text-white font-medium';
-        line.appendChild(textSpan);
-        this.termBody.appendChild(line);
-        
-        let charIdx = 0;
-        this.terminalIntervalId = setInterval(() => {
-          if (charIdx < step.text.length) {
-            textSpan.textContent += step.text[charIdx];
-            charIdx++;
-            this.termBody.scrollTop = this.termBody.scrollHeight;
-          } else {
-            clearInterval(this.terminalIntervalId);
-            this.terminalTimeoutId = setTimeout(() => this.processStep(), 500);
-          }
-        }, 65);
-      } 
-      else if (step.type === 'output') {
-        const line = document.createElement('div');
-        line.className = 'text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]';
-        line.textContent = step.text;
-        this.termBody.appendChild(line);
-        this.termBody.scrollTop = this.termBody.scrollHeight;
-        this.terminalTimeoutId = setTimeout(() => this.processStep(), 700);
-      }
-      else if (step.type === 'banner') {
-        const bannerPre = document.createElement('pre');
-        bannerPre.className = 'text-cyber-purple font-bold text-[9px] leading-tight select-none py-2';
-        bannerPre.textContent = step.text;
-        this.termBody.appendChild(bannerPre);
-        
-        const logContainer = document.createElement('div');
-        logContainer.className = 'text-emerald-400/90 font-mono text-[10px] pl-4 space-y-1 py-1.5 border-l border-emerald-500/20';
-        step.logs.forEach(logLine => {
-          const p = document.createElement('p');
-          p.textContent = logLine;
-          logContainer.appendChild(p);
-        });
-        this.termBody.appendChild(logContainer);
-        
-        this.termBody.scrollTop = this.termBody.scrollHeight;
-        this.terminalTimeoutId = setTimeout(() => this.processStep(), 1000);
-      }
-      else if (step.type === 'status') {
-        const statusContainer = document.createElement('div');
-        statusContainer.className = 'space-y-1 pl-4 py-1';
-        this.termBody.appendChild(statusContainer);
-        
-        let lineIdx = 0;
-        const printStatus = () => {
-          if (lineIdx < step.lines.length) {
-            const p = document.createElement('p');
-            const textLine = step.lines[lineIdx];
-            
-            if (textLine.startsWith('[ OK ]')) {
-              p.innerHTML = `<span class="text-emerald-400 font-bold">[ OK ]</span> ${textLine.substring(6)}`;
-            } else {
-              p.textContent = textLine;
-            }
-            
-            statusContainer.appendChild(p);
-            this.termBody.scrollTop = this.termBody.scrollHeight;
-            lineIdx++;
-            this.terminalTimeoutId = setTimeout(printStatus, 350);
-          } else {
-            this.terminalTimeoutId = setTimeout(() => this.processStep(), 600);
-          }
-        };
-        printStatus();
-      }
-    }
-  }
+const systemLogs = lang === 'pt-BR' ? [
+  "[SYSTEM] LyraBrain AI Core inicializado com sucesso.",
+  "[SYSTEM] Provedor: Claude 3.5 Sonnet executando em modo CLI local.",
+  "[SYSTEM] Diretório Ativo: /home/pedro/documents/studies",
+  "[SYSTEM] Integridade de rede ativa (Vozes de logs canalizadas via Whonix/Tor)."
+] : [
+  "[SYSTEM] LyraBrain AI Core initialized successfully.",
+  "[SYSTEM] Model: Claude 3.5 Sonnet executing via local CLI.",
+  "[SYSTEM] Working Directory: /home/pedro/documents/studies",
+  "[SYSTEM] Network integrity secure (Log voices routed via Whonix/Tor)."
+];
+---
 
-  // Hidrata as instâncias no cliente (Astro Islands Execution Model)
-  document.querySelectorAll('[data-terminal-translations]').forEach(el => {
-    new TerminalController(el);
-  });
-</script>
+<div
+  class="glass-card rounded-xl overflow-hidden border border-white/5 text-left font-mono text-xs shadow-2xl relative w-full"
+>
+  <!-- Cabeçalho do Terminal -->
+  <div class="relative z-10 px-4 py-3 bg-[#0d0e16]/80 border-b border-white/5 flex items-center justify-between select-none">
+    <div class="flex items-center gap-2">
+      <span class="w-3 h-3 rounded-full bg-red-500/60 inline-block" aria-hidden="true"></span>
+      <span class="w-3 h-3 rounded-full bg-yellow-500/50 inline-block" aria-hidden="true"></span>
+      <span class="w-3 h-3 rounded-full bg-emerald-500/50 inline-block" aria-hidden="true"></span>
+    </div>
+    <span class="text-[10px] text-gray-500 tracking-wider">{t('term_tab_title', lang)}</span>
+    <span class="text-[10px] text-gray-400 font-semibold">bash</span>
+  </div>
+  
+  <!-- Corpo do Terminal com aria-live para acessibilidade WCAG AA -->
+  <div
+    id="terminal-body"
+    class="relative z-10 p-5 space-y-3 bg-[#090A0F]/85 min-h-[350px] text-gray-300 overflow-y-auto leading-relaxed max-h-[400px] select-text"
+  >
+    <!-- Line 1: whoami -->
+    <div class="flex items-center">
+      <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
+      <span
+        class="terminal-command text-white font-medium overflow-hidden whitespace-nowrap border-r-2 border-transparent inline-block w-0"
+        style="--char-count: 6; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end infinite; animation-delay: 0.5s;"
+      >whoami</span>
+    </div>
+    
+    <!-- Output 1: whoami output -->
+    <div
+      class="terminal-output text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]"
+      style="animation: terminal-reveal 0.3s forwards; animation-delay: 1.0s; opacity: 0;"
+    >
+      <p aria-live="polite">
+        {t('term_whoami_out', lang)}
+      </p>
+    </div>
+
+    <!-- Line 2: cat sobre.txt -->
+    <div
+      class="flex items-center"
+      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 1.4s; opacity: 0;"
+    >
+      <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
+      <span
+        class="terminal-command text-white font-medium overflow-hidden whitespace-nowrap border-r-2 border-transparent inline-block w-0"
+        style=`--char-count: 13; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end infinite; animation-delay: 1.5s;`
+      >{lang === 'pt-BR' ? 'cat sobre.txt' : 'cat about.txt'}</span>
+    </div>
+
+    <!-- Output 2: about me output -->
+    <div
+      class="terminal-output text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]"
+      style="animation: terminal-reveal 0.3s forwards; animation-delay: 2.5s; opacity: 0;"
+    >
+      <p aria-live="polite">
+        {t('term_about_out', lang)}
+      </p>
+    </div>
+
+    <!-- Line 3: lyrabrain --init -->
+    <div
+      class="flex items-center"
+      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 2.9s; opacity: 0;"
+    >
+      <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
+      <span
+        class="terminal-command text-white font-medium overflow-hidden whitespace-nowrap border-r-2 border-transparent inline-block w-0"
+        style="--char-count: 16; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end infinite; animation-delay: 3.0s;"
+      >lyrabrain --init</span>
+    </div>
+
+    <!-- Output 3: banner & system logs -->
+    <div
+      class="terminal-output-container space-y-2"
+      style="animation: terminal-reveal 0.4s forwards; animation-delay: 4.1s; opacity: 0;"
+    >
+      <pre class="text-cyber-purple font-bold text-[9px] leading-tight select-none py-2">{asciiBanner}</pre>
+      <div class="text-emerald-400/90 font-mono text-[10px] pl-4 space-y-1 py-1.5 border-l border-emerald-500/20" aria-live="polite">
+        {systemLogs.map(log => <p>{log}</p>)}
+      </div>
+    </div>
+
+    <!-- Line 4: ./status.sh -->
+    <div
+      class="flex items-center"
+      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 4.6s; opacity: 0;"
+    >
+      <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
+      <span
+        class="terminal-command text-white font-medium overflow-hidden whitespace-nowrap border-r-2 border-transparent inline-block w-0"
+        style="--char-count: 11; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end infinite; animation-delay: 4.7s;"
+      >./status.sh</span>
+    </div>
+
+    <!-- Output 4: status list -->
+    <div class="terminal-output space-y-1 pl-4 py-1 text-[11px]" aria-live="polite">
+      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 5.6s; opacity: 0;">
+        <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_1', lang).substring(6)}
+      </p>
+      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.0s; opacity: 0;">
+        <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_2', lang).substring(6)}
+      </p>
+      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.4s; opacity: 0;">
+        <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_3', lang).substring(6)}
+      </p>
+      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.8s; opacity: 0;">
+        <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_4', lang).substring(6)}
+      </p>
+    </div>
+
+    <!-- Final empty active line with blinking cursor -->
+    <div
+      class="flex items-center"
+      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 7.2s; opacity: 0;"
+    >
+      <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
+      <span class="w-2 h-4 bg-cyber-blue animate-terminal-blink inline-block" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>

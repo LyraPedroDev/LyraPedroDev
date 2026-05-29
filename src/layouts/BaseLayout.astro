@@ -1,10 +1,12 @@
 ---
 import '../styles/global.css';
+import LanguageSwitcher from '../components/ui/LanguageSwitcher.astro';
+import { t } from '../i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
-  lang?: string;
+  lang?: 'pt-BR' | 'en';
 }
 
 const {
@@ -12,6 +14,11 @@ const {
   description = "Espaço digital de Pedro Lyra. Jovem autodidata, curioso e apaixonado por segurança cibernética, Linux, automação e desenvolvimento backend.",
   lang = "pt-BR",
 } = Astro.props;
+
+// Determine canonical URL dynamically
+const canonicalUrl = `https://pedrolyra.dev${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`;
+const alternatePt = "https://pedrolyra.dev/";
+const alternateEn = "https://pedrolyra.dev/en/";
 ---
 
 <!DOCTYPE html>
@@ -26,11 +33,20 @@ const {
     <meta name="author" content="Pedro Lyra" />
     <meta name="theme-color" content="#090A0F" />
     
+    <!-- Multi-Language SEO alternates (Google Best Practice) -->
+    <link rel="alternate" hreflang="pt-BR" href={alternatePt} />
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="x-default" href={alternatePt} />
+    <link rel="canonical" href={canonicalUrl} />
+    
     <!-- OpenGraph Meta Tags para Compartilhamento -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pedro Lyra" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={lang === 'pt-BR' ? 'pt_BR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'pt-BR' ? 'en_US' : 'pt_BR'} />
     
     <!-- Preload e Preconnect para Performance de Rede -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +55,7 @@ const {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="relative min-h-screen overflow-x-hidden antialiased">
+  <body class="relative min-h-screen overflow-x-hidden antialiased bg-[#090A0F] text-[#E5E7EB]">
     <!-- Fundo Estrutural da Grelha Cyber -->
     <div class="absolute inset-0 tech-grid pointer-events-none z-0" aria-hidden="true"></div>
     
@@ -48,7 +64,356 @@ const {
     <div class="glow-orb glow-blue animate-float-blue gpu-composited top-[35%] left-[-150px]" aria-hidden="true"></div>
     <div class="glow-orb glow-purple animate-float-cyan gpu-composited bottom-[-150px] right-[50px]" aria-hidden="true"></div>
 
-    <!-- Conteúdo da Página -->
+    <!-- HEADER & NAVEGAÇÃO -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300 py-5">
+      <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+        <!-- Logo -->
+        <a href={lang === 'pt-BR' ? '/' : '/en/'} class="flex items-center gap-2.5 group" aria-label="Home page / Página inicial">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-blue flex items-center justify-center p-[1px] transition-transform duration-300 group-hover:rotate-6">
+            <div class="w-full h-full rounded-[7px] bg-[#090A0F] flex items-center justify-center">
+              <span class="font-mono text-xs font-bold text-cyber-blue">PL</span>
+            </div>
+          </div>
+          <span class="font-display font-bold tracking-wide text-white text-base">
+            Pedro <span class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-transparent bg-clip-text">Lyra</span>
+          </span>
+        </a>
+
+        <!-- Links de Navegação -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#sobre" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium">
+            {t('nav_sobre', lang)}
+          </a>
+          <a href="#projetos" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium">
+            {t('nav_projetos', lang)}
+          </a>
+          <a href="#desenvolvimento" class="text-sm text-gray-400 hover:text-white transition-colors tracking-wide font-medium">
+            {t('nav_desenvolvimento', lang)}
+          </a>
+        </div>
+
+        <!-- Controles de Idioma & LinkedIn -->
+        <div class="flex items-center gap-4">
+          <!-- Seletor de Idioma Dinâmico -->
+          <LanguageSwitcher lang={lang} />
+
+          <!-- Botão LinkedIn CTA -->
+          <div class="hidden sm:block">
+            <a
+              href="https://www.linkedin.com/in/lyrapedro/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Perfil do LinkedIn de Pedro Lyra"
+              class="relative group inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-medium text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden btn-interactive animate-pulse-glow"
+            >
+              <span class="absolute inset-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:animate-shine"></span>
+              LinkedIn
+              <svg class="w-3 h-3 ml-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Botão Menu Mobile -->
+        <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label={lang === 'pt-BR' ? "Abrir Menu" : "Open Menu"}>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menu Mobile Dropdown -->
+      <div id="mobile-menu" class="hidden md:hidden px-6 pb-6 pt-2 bg-[#090A0F]/95 backdrop-blur-lg border-b border-white/5">
+        <div class="flex flex-col gap-4">
+          <a href="#sobre" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium">
+            {t('nav_sobre', lang)}
+          </a>
+          <a href="#projetos" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium">
+            {t('nav_projetos', lang)}
+          </a>
+          <a href="#desenvolvimento" class="text-gray-400 hover:text-white transition-colors py-2 text-sm tracking-wide font-medium">
+            {t('nav_desenvolvimento', lang)}
+          </a>
+          <a
+            href="https://www.linkedin.com/in/lyrapedro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block text-center px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-xs text-white font-semibold uppercase tracking-wider transition-all duration-300"
+            aria-label="LinkedIn"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Slot de Conteúdo -->
     <slot />
+
+    <!-- FOOTER / CONECTAR -->
+    <footer class="border-t border-white/5 pt-20 pb-12 px-6 relative z-10 bg-[#090A0F]/60">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Título e Texto -->
+        <span class="font-mono text-xs font-bold tracking-widest text-cyber-purple uppercase block mb-3">
+          {t('footer_badge', lang)}
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          {t('footer_title', lang)}
+        </h2>
+        <p class="max-w-lg mx-auto text-gray-400 text-sm leading-relaxed mb-6">
+          {t('footer_desc', lang)}
+        </p>
+
+        <!-- Link de E-mail Dinâmico com Cópia Rápida -->
+        <div class="mb-10">
+          <a
+            href="mailto:pedro.henrique.lyra17@gmail.com"
+            id="contact-email-btn"
+            data-copied-text={t('msg_email_copied', lang)}
+            data-original-text="pedro.henrique.lyra17@gmail.com"
+            aria-label={lang === 'pt-BR' ? "Copiar endereço de e-mail de Pedro Lyra" : "Copy Pedro Lyra's email address"}
+            class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2 cursor-pointer btn-interactive focus-visible:outline-none"
+          >
+            <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-9 11h-3a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2z" />
+            </svg>
+            <span id="email-text">pedro.henrique.lyra17@gmail.com</span>
+          </a>
+        </div>
+
+        <!-- Botões das Redes Sociais -->
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+          <a
+            href="https://www.linkedin.com/in/lyrapedro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={lang === 'pt-BR' ? "Visitar perfil do LinkedIn de Pedro Lyra" : "Visit Pedro Lyra's LinkedIn profile"}
+            class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] btn-interactive animate-pulse-glow"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/LyraPedroDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={lang === 'pt-BR' ? "Visitar perfil do GitHub de Pedro Lyra" : "Visit Pedro Lyra's GitHub profile"}
+            class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-gray-200 hover:text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 btn-interactive btn-interactive-blue"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Rodapé Minimalista -->
+        <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-500">
+          <p>{t('footer_copyright', lang)}</p>
+          <div class="flex gap-4">
+            <a href="#sobre" class="hover:text-white transition-colors footer-link">{t('nav_sobre', lang)}</a>
+            <span>/</span>
+            <a href="#projetos" class="hover:text-white transition-colors footer-link">{t('nav_projetos', lang)}</a>
+            <span>/</span>
+            <a href="#desenvolvimento" class="hover:text-white transition-colors footer-link">{lang === 'pt-BR' ? 'Lab' : 'Sandbox'}</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAL INTERATIVO DINÂMICO (Dark Cyber Aesthetic) -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300" aria-labelledby="modal-project-title" role="dialog" aria-modal="true">
+      <!-- Backdrop semitransparente -->
+      <div id="modal-backdrop" class="absolute inset-0 bg-[#090A0F]/85 backdrop-blur-md"></div>
+
+      <!-- Conteúdo do Modal -->
+      <div class="relative w-full max-w-2xl glass-card rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(124,58,237,0.15)] transform scale-95 transition-all duration-300 bg-[#0D0E16]/95 border border-white/10 z-10">
+        <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyber-purple to-cyber-blue"></div>
+
+        <!-- Header do Modal -->
+        <div class="px-6 py-5 border-b border-white/5 flex items-center justify-between">
+          <div>
+            <span id="modal-project-category" class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase">// CATEGORIA</span>
+            <h3 id="modal-project-title" class="font-display text-xl font-bold text-white mt-1">Nome do Projeto</h3>
+          </div>
+          <button id="close-modal-btn" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200" aria-label={lang === 'pt-BR' ? "Fechar modal" : "Close modal"}>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Corpo do Modal -->
+        <div class="p-6 sm:p-8 space-y-6">
+          <!-- Recursos -->
+          <div class="space-y-3">
+            <h4 class="font-mono text-xs font-semibold tracking-wider text-gray-400 uppercase">
+              {t('modal_features_title', lang)}
+            </h4>
+            <p id="modal-project-details" class="text-gray-300 text-sm sm:text-base leading-relaxed">
+              Detalhes sobre o projeto...
+            </p>
+          </div>
+
+          <!-- Stack -->
+          <div class="space-y-2.5">
+            <h4 class="font-mono text-xs font-semibold tracking-wider text-gray-400 uppercase">// Stack</h4>
+            <div id="modal-project-tech" class="flex flex-wrap gap-1.5">
+              <!-- Badges dinâmicos -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodapé do Modal -->
+        <div class="px-6 py-4 bg-white/3 border-t border-white/5 flex flex-col sm:flex-row justify-end items-center gap-3">
+          <button id="modal-close-bottom-btn" class="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-gray-300 font-semibold tracking-wider uppercase transition-colors">
+            {t('modal_close_btn', lang)}
+          </button>
+          <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase text-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)]">
+            {t('modal_github_btn', lang)}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS DE COMPORTAMENTOS GLOBAIS -->
+    <script>
+      // 1. Transição de Header ao Fazer Scroll
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (!nav) return;
+        if (window.scrollY > 40) {
+          nav.classList.add('py-3.5');
+          nav.classList.remove('py-5');
+          nav.style.background = 'rgba(9, 10, 15, 0.9)';
+        } else {
+          nav.classList.add('py-5');
+          nav.classList.remove('py-3.5');
+          nav.style.background = 'rgba(9, 10, 15, 0.7)';
+        }
+      });
+
+      // 2. Menu Mobile
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      }
+
+      // 3. Copiar E-mail com Feedback Seguro
+      const emailBtn = document.getElementById('contact-email-btn');
+      const emailText = document.getElementById('email-text');
+      if (emailBtn && emailText) {
+        const copiedText = emailBtn.getAttribute('data-copied-text') || 'Copiado!';
+        const originalText = emailBtn.getAttribute('data-original-text') || 'pedro.henrique.lyra17@gmail.com';
+        let isCopying = false;
+
+        emailBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (isCopying) return;
+          isCopying = true;
+
+          navigator.clipboard.writeText(originalText).then(() => {
+            emailText.textContent = copiedText;
+            setTimeout(() => {
+              emailText.textContent = originalText;
+              isCopying = false;
+            }, 2000);
+          }).catch(err => {
+            console.error("Falha ao copiar o e-mail: ", err);
+            isCopying = false;
+          });
+        });
+      }
+
+      // 4. Modal Interativo de Detalhes
+      const modal = document.getElementById('project-modal');
+      const modalContainer = modal ? modal.querySelector('.glass-card') : null;
+      const backdrop = document.getElementById('modal-backdrop');
+
+      function openModal(btn) {
+        const title = btn.getAttribute('data-project-title');
+        const category = btn.getAttribute('data-project-category');
+        const details = btn.getAttribute('data-project-details');
+        const github = btn.getAttribute('data-project-github');
+        const techs = JSON.parse(btn.getAttribute('data-project-techs') || '[]');
+
+        document.getElementById('modal-project-category').textContent = category;
+        document.getElementById('modal-project-title').textContent = title;
+        document.getElementById('modal-project-details').textContent = details;
+        document.getElementById('modal-github-link').href = github;
+
+        const techContainer = document.getElementById('modal-project-tech');
+        techContainer.innerHTML = '';
+        techs.forEach(tech => {
+          const badge = document.createElement('span');
+          badge.className = "font-mono text-xs px-2.5 py-1 rounded bg-white/5 border border-white/5 text-gray-300";
+          badge.textContent = tech;
+          techContainer.appendChild(badge);
+        });
+
+        document.body.style.overflow = 'hidden';
+        if (modal && modalContainer) {
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modalContainer.classList.remove('scale-95');
+          modalContainer.classList.add('scale-100');
+        }
+      }
+
+      function closeModal() {
+        if (modal && modalContainer) {
+          modalContainer.classList.remove('scale-100');
+          modalContainer.classList.add('scale-95');
+          setTimeout(() => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+          }, 150);
+        }
+      }
+
+      // Hook up card detail button click events globally
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.project-details-btn');
+        if (btn) {
+          openModal(btn);
+        }
+      });
+
+      if (modal) {
+        document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+        document.getElementById('modal-close-bottom-btn').addEventListener('click', closeModal);
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+        
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+            closeModal();
+          }
+        });
+      }
+
+      // 5. IntersectionObserver para Animação de Entrada Fade-In
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.05
+      });
+
+      document.querySelectorAll('.fade-in-section').forEach(section => {
+        observer.observe(section);
+      });
+    </script>
   </body>
 </html>

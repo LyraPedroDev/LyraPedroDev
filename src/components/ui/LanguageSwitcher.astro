@@ -1,0 +1,21 @@
+---
+interface Props {
+  lang: 'pt-BR' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const targetUrl = lang === 'pt-BR' ? '/en/' : '/';
+const flag = lang === 'pt-BR' ? '🇺🇸' : '🇧🇷';
+const label = lang === 'pt-BR' ? 'EN' : 'PT';
+const ariaLabel = lang === 'pt-BR' ? 'Switch to English' : 'Mudar para Português';
+---
+
+<a
+  href={targetUrl}
+  class="font-mono text-xs text-gray-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/5 bg-white/3 transition-all duration-300 hover:border-cyber-purple flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[#090A0F]"
+  aria-label={ariaLabel}
+>
+  <span class="text-xs" aria-hidden="true">{flag}</span>
+  <span>{label}</span>
+</a>

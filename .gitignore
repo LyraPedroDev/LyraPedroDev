@@ -1,0 +1,15 @@
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Temporary directories
+.astro/
+
+# System files & IDEs
+.DS_Store
+.env
+.env.*
+!.env.example
+.vscode/

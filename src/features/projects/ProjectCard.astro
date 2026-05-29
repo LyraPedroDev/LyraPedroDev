@@ -5,6 +5,7 @@ interface Props {
   id: string;
   title: string;
   description: string;
+  details: string;
   filename: string;
   techs: string[];
   github: string;
@@ -16,6 +17,7 @@ const {
   id,
   title,
   description,
+  details,
   filename,
   techs,
   github,
@@ -42,7 +44,7 @@ const hoverThemeColors = {
 };
 ---
 
-<Card theme={theme} id={`project-card-${id}`} class="stagger-card">
+<Card theme={theme} id={`project-card-${id}`} class="stagger-card group">
   <!-- Border Beam SVG Vector Animation (Zero Idle Power na GPU) -->
   <svg class="border-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
     <rect
@@ -91,8 +93,14 @@ const hoverThemeColors = {
       
       <div class="flex items-center justify-between pt-3.5 border-t border-white/5">
         <button
+          class={`project-details-btn text-xs font-mono font-semibold transition-colors hover:text-white cursor-pointer ${textThemeColors[theme]}`}
+          data-project-id={id}
+          data-project-title={title}
+          data-project-category={category}
+          data-project-details={details}
+          data-project-techs={JSON.stringify(techs)}
+          data-project-github={github}
           aria-label={`Ver detalhes do projeto ${title}`}
-          class={`text-xs font-mono font-semibold transition-colors hover:text-white cursor-pointer ${textThemeColors[theme]}`}
         >
           Ver Detalhes
         </button>

@@ -1,0 +1,6 @@
+# robots.txt for pedrolyra.dev
+User-agent: *
+Allow: /
+Allow: /en/
+
+Sitemap: https://pedrolyra.dev/sitemap.xml
