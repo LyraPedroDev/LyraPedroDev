@@ -154,15 +154,21 @@
     }
   }
 
-  /* ==========================================================================
-     TERMINAL SEQUENTIAL TYPING ANIMATIONS (Pure CSS & 60 FPS)
-     ========================================================================== */
+  .terminal-command {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    border-right: 2px solid transparent;
+  }
+
   @keyframes terminal-typing {
     from { width: 0; }
     to { width: calc(var(--char-count) * 1ch); }
   }
 
   @keyframes terminal-blink {
+    from, to { border-color: transparent; }
     50% { border-color: #06B6D4; }
   }
 
