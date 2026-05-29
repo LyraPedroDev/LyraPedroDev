@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Terminal from '../components/ui/Terminal.astro';
 import ProjectCard from '../features/projects/ProjectCard.astro';
+import SkillsSection from '../components/ui/SkillsSection.astro';
+import GithubActivity from '../components/ui/GithubActivity.astro';
 import { t } from '../i18n/utils';
 
 const lang = 'pt-BR';
@@ -156,6 +158,12 @@ const projects = [
       ))}
     </div>
   </section>
+
+  <!-- SECÇÃO: HABILIDADES (TECH STACK) -->
+  <SkillsSection lang={lang} />
+
+  <!-- SECÇÃO: ATIVIDADE DO GITHUB -->
+  <GithubActivity lang={lang} />
 
   <!-- SECÇÃO: EM DESENVOLVIMENTO -->
   <section id="desenvolvimento" class="py-24 px-6 relative z-10 max-w-6xl mx-auto fade-in-section">
