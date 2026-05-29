@@ -24,6 +24,21 @@ const alternateEn = "https://pedrolyra.dev/en/";
 <!DOCTYPE html>
 <html lang={lang} class="scroll-smooth">
   <head>
+    <script is:inline>
+      (function() {
+        try {
+          const prefLang = localStorage.getItem('pref-lang');
+          const isEnPage = window.location.pathname.startsWith('/en');
+          if (prefLang === 'en' && !isEnPage) {
+            window.location.replace('/en/');
+          } else if (prefLang === 'pt-BR' && isEnPage) {
+            window.location.replace('/');
+          }
+        } catch (e) {
+          console.warn('localStorage is blocked or inaccessible.', e);
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
