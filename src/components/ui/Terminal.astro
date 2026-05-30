@@ -51,61 +51,37 @@ const systemLogs = lang === 'pt-BR' ? [
     <!-- Line 1: whoami -->
     <div class="flex items-center">
       <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
-      <span
-        class="terminal-command text-white font-medium"
-        style="--char-count: 6; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end 1; animation-delay: 0.5s;"
-      >whoami</span>
+      <span class="cmd-whoami terminal-command text-white font-medium">whoami</span>
     </div>
     
     <!-- Output 1: whoami output -->
-    <div
-      class="terminal-output text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]"
-      style="animation: terminal-reveal 0.3s forwards; animation-delay: 1.0s; opacity: 0;"
-    >
+    <div class="output-whoami text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]">
       <p aria-live="polite">
         {t('term_whoami_out', lang)}
       </p>
     </div>
 
-    <!-- Line 2: cat sobre.txt -->
-    <div
-      class="flex items-center"
-      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 1.4s; opacity: 0;"
-    >
+    <!-- Line 2: cat about.txt -->
+    <div class="line-about flex items-center">
       <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
-      <span
-        class="terminal-command text-white font-medium"
-        style=`--char-count: 13; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end 2; animation-delay: 1.5s;`
-      >{lang === 'pt-BR' ? 'cat sobre.txt' : 'cat about.txt'}</span>
+      <span class="cmd-about terminal-command text-white font-medium">{lang === 'pt-BR' ? 'cat sobre.txt' : 'cat about.txt'}</span>
     </div>
 
     <!-- Output 2: about me output -->
-    <div
-      class="terminal-output text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]"
-      style="animation: terminal-reveal 0.3s forwards; animation-delay: 2.5s; opacity: 0;"
-    >
+    <div class="output-about text-gray-400 pl-4 py-1 border-l-2 border-white/5 italic text-[11px]">
       <p aria-live="polite">
         {t('term_about_out', lang)}
       </p>
     </div>
 
     <!-- Line 3: lyrabrain --init -->
-    <div
-      class="flex items-center"
-      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 2.9s; opacity: 0;"
-    >
+    <div class="line-brain flex items-center">
       <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
-      <span
-        class="terminal-command text-white font-medium"
-        style="--char-count: 16; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end 2; animation-delay: 3.0s;"
-      >lyrabrain --init</span>
+      <span class="cmd-brain terminal-command text-white font-medium">lyrabrain --init</span>
     </div>
 
     <!-- Output 3: banner & system logs -->
-    <div
-      class="terminal-output-container space-y-2"
-      style="animation: terminal-reveal 0.4s forwards; animation-delay: 4.1s; opacity: 0;"
-    >
+    <div class="output-brain space-y-2">
       <pre class="text-cyber-purple font-bold text-[9px] leading-tight select-none py-2">{asciiBanner}</pre>
       <div class="text-emerald-400/90 font-mono text-[10px] pl-4 space-y-1 py-1.5 border-l border-emerald-500/20" aria-live="polite">
         {systemLogs.map(log => <p>{log}</p>)}
@@ -113,38 +89,29 @@ const systemLogs = lang === 'pt-BR' ? [
     </div>
 
     <!-- Line 4: ./status.sh -->
-    <div
-      class="flex items-center"
-      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 4.6s; opacity: 0;"
-    >
+    <div class="line-status flex items-center">
       <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
-      <span
-        class="terminal-command text-white font-medium"
-        style="--char-count: 11; animation: terminal-typing calc(var(--char-count) * 0.06s) steps(var(--char-count)) forwards, terminal-blink 0.5s step-end 2; animation-delay: 4.7s;"
-      >./status.sh</span>
+      <span class="cmd-status terminal-command text-white font-medium">./status.sh</span>
     </div>
 
     <!-- Output 4: status list -->
-    <div class="terminal-output space-y-1 pl-4 py-1 text-[11px]" aria-live="polite">
-      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 5.6s; opacity: 0;">
+    <div class="output-status space-y-1 pl-4 py-1 text-[11px]" aria-live="polite">
+      <p class="status-l1">
         <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_1', lang).substring(6)}
       </p>
-      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.0s; opacity: 0;">
+      <p class="status-l2">
         <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_2', lang).substring(6)}
       </p>
-      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.4s; opacity: 0;">
+      <p class="status-l3">
         <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_3', lang).substring(6)}
       </p>
-      <p style="animation: terminal-reveal-instant 0.2s forwards; animation-delay: 6.8s; opacity: 0;">
+      <p class="status-l4">
         <span class="text-emerald-400 font-bold">[ OK ]</span> {t('term_status_4', lang).substring(6)}
       </p>
     </div>
 
     <!-- Final empty active line with blinking cursor -->
-    <div
-      class="flex items-center"
-      style="animation: terminal-reveal-instant 0.1s forwards; animation-delay: 7.2s; opacity: 0;"
-    >
+    <div class="line-final-prompt flex items-center">
       <span class="text-cyber-blue font-bold mr-2 select-none">pedro@lyra-mint:~$</span>
       <span class="w-2 h-4 bg-cyber-blue animate-terminal-blink inline-block" aria-hidden="true"></span>
     </div>

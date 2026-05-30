@@ -12,26 +12,27 @@ const categories = [
     key: 'skills_cat_backend',
     skills: [
       { name: 'Python', levelKey: 'skills_level_senior', levelPercent: 90, descKey: 'skills_python_desc', status: 'senior' as const },
-      { name: 'Flask', levelKey: 'skills_level_senior', levelPercent: 90, descKey: 'skills_flask_desc', status: 'senior' as const },
-      { name: 'C#', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_csharp_desc', status: 'intermediate' as const },
-      { name: 'ASP.NET Core MVC', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_aspnet_desc', status: 'intermediate' as const },
+      { name: 'Flask', levelKey: 'skills_level_senior', levelPercent: 85, descKey: 'skills_flask_desc', status: 'senior' as const },
+      { name: 'C#', levelKey: 'skills_level_intermediate', levelPercent: 80, descKey: 'skills_csharp_desc', status: 'intermediate' as const },
+      { name: 'ASP.NET MVC', levelKey: 'skills_level_intermediate', levelPercent: 75, descKey: 'skills_aspnet_desc', status: 'intermediate' as const },
     ]
   },
   {
     key: 'skills_cat_frontend',
     skills: [
-      { name: 'React', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_react_desc', status: 'intermediate' as const },
+      { name: 'React', levelKey: 'skills_level_intermediate', levelPercent: 70, descKey: 'skills_react_desc', status: 'intermediate' as const },
       { name: 'TypeScript', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_ts_desc', status: 'intermediate' as const },
-      { name: 'Vanilla JS', levelKey: 'skills_level_senior', levelPercent: 90, descKey: 'skills_js_desc', status: 'senior' as const },
-      { name: 'Tailwind CSS', levelKey: 'skills_level_senior', levelPercent: 90, descKey: 'skills_tailwind_desc', status: 'senior' as const },
+      { name: 'Vanilla JS', levelKey: 'skills_level_senior', levelPercent: 80, descKey: 'skills_js_desc', status: 'senior' as const },
+      { name: 'Tailwind CSS', levelKey: 'skills_level_senior', levelPercent: 85, descKey: 'skills_tailwind_desc', status: 'senior' as const },
     ]
   },
   {
     key: 'skills_cat_infra',
     skills: [
       { name: 'Linux', levelKey: 'skills_level_senior', levelPercent: 90, descKey: 'skills_linux_desc', status: 'senior' as const },
-      { name: 'Automação (n8n & Bash)', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_automation_desc', status: 'intermediate' as const },
-      { name: 'CI/CD', levelKey: 'skills_level_beginner', levelPercent: 35, descKey: 'skills_cicd_desc', status: 'beginner' as const },
+      { name: 'Automation', levelKey: 'skills_level_intermediate', levelPercent: 65, descKey: 'skills_automation_desc', status: 'intermediate' as const },
+      { name: 'n8n', levelKey: 'skills_level_learning', levelPercent: 55, descKey: 'skills_n8n_desc', status: 'learning' as const },
+      { name: 'Bash', levelKey: 'skills_level_intermediate', levelPercent: 75, descKey: 'skills_bash_desc', status: 'intermediate' as const },
     ]
   }
 ];
@@ -39,13 +40,13 @@ const categories = [
 const levelClasses = {
   senior: 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5',
   intermediate: 'text-cyber-blue border-cyber-blue/20 bg-cyber-blue/5',
-  beginner: 'text-cyber-purple border-cyber-purple/20 bg-cyber-purple/5'
+  learning: 'text-cyber-yellow border-cyber-yellow/20 bg-cyber-yellow/5'
 };
 
 const levelDots = {
   senior: 'bg-emerald-400',
   intermediate: 'bg-cyber-blue',
-  beginner: 'bg-cyber-purple'
+  learning: 'bg-cyber-yellow'
 };
 ---
 
@@ -81,7 +82,7 @@ const levelDots = {
           <!-- Lista de Skills -->
           <div class="space-y-6">
             {cat.skills.map(skill => (
-              <div class="relative group/skill flex flex-col gap-2 p-3 sm:p-4 rounded-xl bg-white/2 border border-white/5 transition-all duration-300 hover:border-cyber-purple/20 hover:bg-white/3 select-none">
+              <div class="relative group/skill flex flex-col gap-2 p-3 sm:p-4 rounded-xl bg-white/2 border border-white/5 transition-all duration-300 hover:border-cyber-purple/20 hover:bg-white/3 select-none cursor-pointer">
                 <!-- Tooltip CSS-Only (Glow & Fade) -->
                 <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-[#0D0E16] border border-white/10 rounded-lg text-[10px] font-mono font-medium text-gray-300 opacity-0 pointer-events-none group-hover/skill:opacity-100 transition-all duration-300 cubic-bezier(0.16, 1, 0.3, 1) shadow-[0_10px_30px_rgba(0,0,0,0.5)] whitespace-nowrap z-30">
                   {t(skill.descKey, lang)}
@@ -105,7 +106,7 @@ const levelDots = {
                 <!-- Barra de Progresso com Neon Glow em Hover -->
                 <div class="w-full h-1.5 bg-white/5 rounded-full overflow-visible relative mt-1" aria-hidden="true">
                   <div
-                    class="skill-bar-progress h-full rounded-full transition-all duration-500 ease-out"
+                    class={`skill-bar-progress skill-bar-${skill.status} h-full rounded-full transition-all duration-300 ease-out`}
                     style={`width: ${skill.levelPercent}%;`}
                   ></div>
                 </div>
@@ -121,14 +122,42 @@ const levelDots = {
 <style>
   /* Efeito de Brilho Neon e Escala na Barra de Progresso */
   .skill-bar-progress {
-    background: linear-gradient(90deg, #7C3AED, #06B6D4);
-    box-shadow: 0 0 5px #7C3AED;
     will-change: box-shadow, transform;
-    transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .group\/skill:hover .skill-bar-progress {
-    box-shadow: 0 0 15px #06B6D4, inset 0 0 5px rgba(6, 182, 212, 0.3);
-    transform: scaleY(1.2);
+  .skill-bar-senior {
+    background: linear-gradient(90deg, #7C3AED, #06B6D4);
+    box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+  }
+
+  .skill-bar-intermediate {
+    background: linear-gradient(90deg, #06B6D4, #FFB600);
+    box-shadow: 0 0 5px rgba(6, 182, 212, 0.5);
+  }
+
+  .skill-bar-learning {
+    background: #FFB600;
+    box-shadow: 0 0 5px rgba(255, 182, 0, 0.5);
+  }
+
+  /* Hover States */
+  .group\/skill:hover {
+    transform: translateY(-2px);
+  }
+
+  .group\/skill:hover .skill-bar-senior {
+    box-shadow: 0 0 20px #7C3AED, inset 0 0 20px rgba(124, 58, 237, 0.3);
+    transform: scaleX(1.02);
+  }
+
+  .group\/skill:hover .skill-bar-intermediate {
+    box-shadow: 0 0 20px #06B6D4, inset 0 0 20px rgba(6, 182, 212, 0.3);
+    transform: scaleX(1.02);
+  }
+
+  .group\/skill:hover .skill-bar-learning {
+    box-shadow: 0 0 20px #FFB600, inset 0 0 20px rgba(255, 182, 0, 0.3);
+    transform: scaleX(1.02);
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import Card from '../../components/ui/Card.astro';
+import { t } from '../../i18n/utils';
 
 interface Props {
   id: string;
@@ -11,6 +12,7 @@ interface Props {
   github: string;
   category: string;
   theme?: 'purple' | 'blue' | 'cyan';
+  lang?: 'pt-BR' | 'en';
 }
 
 const {
@@ -23,13 +25,8 @@ const {
   github,
   category,
   theme = 'purple',
+  lang = 'pt-BR',
 } = Astro.props;
-
-const strokeColors = {
-  purple: 'stroke-cyber-purple',
-  blue: 'stroke-cyber-blue',
-  cyan: 'stroke-cyber-cyan',
-};
 
 const textThemeColors = {
   purple: 'text-cyber-purple',
@@ -47,13 +44,53 @@ const hoverThemeColors = {
 <Card theme={theme} id={`project-card-${id}`} class="stagger-card group">
   <!-- Border Beam SVG Vector Animation (Zero Idle Power na GPU) -->
   <svg class="border-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      {id === 'ecochat' && (
+        <linearGradient id="eco-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7C3AED" />
+          <stop offset="100%" stop-color="#00D9FF" />
+        </linearGradient>
+      )}
+      {id === 'cinema' && (
+        <linearGradient id="cinema-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#06B6D4" />
+          <stop offset="100%" stop-color="#7C3AED" />
+        </linearGradient>
+      )}
+      {id === 'lyrabrain' && (
+        <linearGradient id="lyra-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00D9FF" />
+          <stop offset="100%" stop-color="#FF006E" />
+        </linearGradient>
+      )}
+      {id === 'feijoeiro' && (
+        <linearGradient id="feijoeiro-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7C3AED" />
+          <stop offset="100%" stop-color="#FF006E" />
+        </linearGradient>
+      )}
+      {id === 'casa' && (
+        <linearGradient id="casa-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FF006E" />
+          <stop offset="100%" stop-color="#FFB600" />
+        </linearGradient>
+      )}
+    </defs>
     <rect
-      class={`border-beam-rect ${strokeColors[theme]}`}
+      class="border-beam-rect"
       x="0.5"
       y="0.5"
       width="99"
       height="99"
       rx="4"
+      stroke={
+        id === 'ecochat' ? 'url(#eco-gradient)' :
+        id === 'cinema' ? 'url(#cinema-gradient)' :
+        id === 'lyrabrain' ? 'url(#lyra-gradient)' :
+        id === 'feijoeiro' ? 'url(#feijoeiro-gradient)' :
+        id === 'casa' ? 'url(#casa-gradient)' :
+        '#7C3AED'
+      }
     />
   </svg>
   
@@ -100,18 +137,18 @@ const hoverThemeColors = {
           data-project-details={details}
           data-project-techs={JSON.stringify(techs)}
           data-project-github={github}
-          aria-label={`Ver detalhes do projeto ${title}`}
+          aria-label={`${t('btn_details', lang)}: ${title}`}
         >
-          Ver Detalhes
+          {t('btn_details', lang)}
         </button>
         <a
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Ver código-fonte de ${title} no GitHub`}
+          aria-label={`${t('btn_view_code', lang)}: ${title}`}
           class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
         >
-          <span>Ver Código</span>
+          <span>{t('btn_view_code', lang)}</span>
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
           </svg>

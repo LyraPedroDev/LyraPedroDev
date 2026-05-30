@@ -141,11 +141,13 @@
 
   /* Animação ativa APENAS em hover para zero idle GPU */
   .group:hover .border-beam-rect {
-    animation: border-beam 3s linear infinite;
+    animation: border-dash 3s linear infinite;
     opacity: 0.95;
+    stroke-width: 2px;
+    stroke-linecap: round;
   }
 
-  @keyframes border-beam {
+  @keyframes border-dash {
     0% {
       stroke-dashoffset: 0;
     }
@@ -162,33 +164,120 @@
     border-right: 2px solid transparent;
   }
 
-  @keyframes terminal-typing {
-    from { width: 0; }
-    to { width: calc(var(--char-count) * 1ch); }
+  /* ==========================================================================
+     TERMINAL SEQUENTIAL CSS ANIMATIONS
+     ========================================================================== */
+  @keyframes type-whoami { 0% { width: 0; } 100% { width: 100%; } }
+  @keyframes type-about { 0% { width: 0; } 100% { width: 100%; } }
+  @keyframes type-brain { 0% { width: 0; } 100% { width: 100%; } }
+  @keyframes type-status { 0% { width: 0; } 100% { width: 100%; } }
+
+  @keyframes reveal-line {
+    0% { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 500px; }
   }
 
-  @keyframes terminal-blink {
-    from, to { border-color: transparent; }
-    50% { border-color: #06B6D4; }
+  @keyframes reveal-output-whoami {
+    0% { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 200px; }
+  }
+  @keyframes reveal-output-about {
+    0% { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 200px; }
+  }
+  @keyframes reveal-output-brain {
+    0% { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 500px; }
+  }
+  @keyframes reveal-output-status {
+    0% { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 200px; }
   }
 
-  @keyframes terminal-reveal {
-    from { opacity: 0; transform: translate3d(0, 4px, 0); }
-    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  @keyframes blink-cursor {
+    0%, 49% { border-color: #06B6D4; }
+    50%, 100% { border-color: transparent; }
   }
 
-  @keyframes terminal-reveal-instant {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  @keyframes blink-infinite {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
 
-  @keyframes terminal-blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+  /* Command Classes */
+  .cmd-whoami {
+    animation: type-whoami 300ms steps(6, end) 0.5s forwards, blink-cursor 300ms step-end 0.5s 2;
+  }
+  .output-whoami {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-output-whoami 200ms ease-out 1.1s forwards;
+  }
+
+  .line-about {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-line 200ms ease-out 1.4s forwards;
+  }
+  .cmd-about {
+    animation: type-about 650ms steps(13, end) 1.4s forwards, blink-cursor 316ms step-end 1.4s 3;
+  }
+  .output-about {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-output-about 200ms ease-out 2.35s forwards;
+  }
+
+  .line-brain {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-line 200ms ease-out 2.65s forwards;
+  }
+  .cmd-brain {
+    animation: type-brain 800ms steps(16, end) 2.65s forwards, blink-cursor 275ms step-end 2.65s 4;
+  }
+  .output-brain {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-output-brain 200ms ease-out 3.75s forwards;
+  }
+
+  .line-status {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-line 200ms ease-out 4.05s forwards;
+  }
+  .cmd-status {
+    animation: type-status 550ms steps(11, end) 4.05s forwards, blink-cursor 283ms step-end 4.05s 3;
+  }
+  .output-status {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-output-status 200ms ease-out 4.9s forwards;
+  }
+
+  /* Status lines sequential reveal */
+  .status-l1 { opacity: 0; display: block; animation: reveal-line 150ms ease-out 4.9s forwards; }
+  .status-l2 { opacity: 0; display: block; animation: reveal-line 150ms ease-out 5.2s forwards; }
+  .status-l3 { opacity: 0; display: block; animation: reveal-line 150ms ease-out 5.5s forwards; }
+  .status-l4 { opacity: 0; display: block; animation: reveal-line 150ms ease-out 5.8s forwards; }
+
+  .line-final-prompt {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    animation: reveal-line 100ms ease-out 6.1s forwards;
   }
 
   .animate-terminal-blink {
-    animation: terminal-blink-cursor 1s step-end infinite;
+    animation: blink-infinite 1s step-end infinite;
   }
 
   /* ==========================================================================
@@ -236,12 +325,29 @@
   .terminal-output,
   .terminal-output-container,
   .terminal-output p,
-  .animate-terminal-blink {
+  .animate-terminal-blink,
+  .line-about,
+  .line-brain,
+  .line-status,
+  .line-final-prompt,
+  .cmd-whoami,
+  .cmd-about,
+  .cmd-brain,
+  .cmd-status,
+  .output-whoami,
+  .output-about,
+  .output-brain,
+  .output-status,
+  .status-l1,
+  .status-l2,
+  .status-l3,
+  .status-l4 {
     animation: none !important;
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
     width: auto !important;
+    max-height: none !important;
     border-right: none !important;
   }
   .border-beam-rect {

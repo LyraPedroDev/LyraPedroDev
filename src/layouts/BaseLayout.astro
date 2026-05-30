@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 
 // Determine canonical URL dynamically
-const canonicalUrl = `https://pedrolyra.dev${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`;
+const canonicalUrl = `https://pedrolyra.dev${Astro.url.pathname}`;
 const alternatePt = "https://pedrolyra.dev/";
 const alternateEn = "https://pedrolyra.dev/en/";
 ---
@@ -26,16 +26,34 @@ const alternateEn = "https://pedrolyra.dev/en/";
   <head>
     <script is:inline>
       (function() {
+        const LANG_KEY = 'preferred-lang';
+        const LANG_PT = 'pt-BR';
+        const LANG_EN = 'en';
+        
         try {
-          const prefLang = localStorage.getItem('pref-lang');
-          const isEnPage = window.location.pathname.startsWith('/en');
-          if (prefLang === 'en' && !isEnPage) {
-            window.location.replace('/en/');
-          } else if (prefLang === 'pt-BR' && isEnPage) {
-            window.location.replace('/');
+          let preferred = localStorage.getItem(LANG_KEY);
+          
+          if (!preferred) {
+            const browserLang = navigator.language;
+            preferred = browserLang.startsWith('en') ? LANG_EN : LANG_PT;
+            localStorage.setItem(LANG_KEY, preferred);
+          }
+          
+          const currentPath = window.location.pathname;
+          const shouldBeEN = preferred === LANG_EN;
+          const isOnEN = currentPath.startsWith('/en') || currentPath.includes('/en/');
+          
+          if (shouldBeEN && !isOnEN) {
+            window.location.pathname = '/en/';
+          } else if (!shouldBeEN && isOnEN) {
+            window.location.pathname = '/';
           }
         } catch (e) {
-          console.warn('localStorage is blocked or inaccessible.', e);
+          // localStorage not available, use navigator.language fallback
+          const browserLang = navigator.language;
+          if (browserLang.startsWith('en') && !window.location.pathname.startsWith('/en')) {
+            window.location.pathname = '/en/';
+          }
         }
       })();
     </script>
@@ -83,7 +101,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
     <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300 py-5">
       <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <!-- Logo -->
-        <a href={lang === 'pt-BR' ? '/' : '/en/'} class="flex items-center gap-2.5 group" aria-label="Home page / Página inicial">
+        <a href={lang === 'pt-BR' ? '/' : '/en/'} class="flex items-center gap-2.5 group" aria-label={t('nav_home_aria', lang)}>
           <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-blue flex items-center justify-center p-[1px] transition-transform duration-300 group-hover:rotate-6">
             <div class="w-full h-full rounded-[7px] bg-[#090A0F] flex items-center justify-center">
               <span class="font-mono text-xs font-bold text-cyber-blue">PL</span>
@@ -118,7 +136,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
               href="https://www.linkedin.com/in/lyrapedro/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Perfil do LinkedIn de Pedro Lyra"
+              aria-label={t('nav_linkedin_aria', lang)}
               class="relative group inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-medium text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden btn-interactive animate-pulse-glow"
             >
               <span class="absolute inset-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:animate-shine"></span>
@@ -131,7 +149,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
         </div>
 
         <!-- Botão Menu Mobile -->
-        <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label={lang === 'pt-BR' ? "Abrir Menu" : "Open Menu"}>
+        <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label={t('nav_menu_aria', lang)}>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
@@ -187,7 +205,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
             id="contact-email-btn"
             data-copied-text={t('msg_email_copied', lang)}
             data-original-text="pedro.henrique.lyra17@gmail.com"
-            aria-label={lang === 'pt-BR' ? "Copiar endereço de e-mail de Pedro Lyra" : "Copy Pedro Lyra's email address"}
+            aria-label={t('footer_email_aria', lang)}
             class="font-mono text-xs sm:text-sm text-cyber-blue hover:text-white border-b border-dashed border-cyber-blue/40 hover:border-white transition-all duration-300 pb-1 inline-flex items-center gap-2 cursor-pointer btn-interactive focus-visible:outline-none"
           >
             <svg class="w-4 h-4 text-cyber-blue group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -203,7 +221,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
             href="https://www.linkedin.com/in/lyrapedro/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={lang === 'pt-BR' ? "Visitar perfil do LinkedIn de Pedro Lyra" : "Visit Pedro Lyra's LinkedIn profile"}
+            aria-label={t('footer_linkedin_aria', lang)}
             class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] btn-interactive animate-pulse-glow"
           >
             LinkedIn
@@ -212,7 +230,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
             href="https://github.com/LyraPedroDev"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={lang === 'pt-BR' ? "Visitar perfil do GitHub de Pedro Lyra" : "Visit Pedro Lyra's GitHub profile"}
+            aria-label={t('footer_github_aria', lang)}
             class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-gray-200 hover:text-white font-semibold text-xs tracking-wider uppercase transition-all duration-300 btn-interactive btn-interactive-blue"
           >
             GitHub
@@ -227,7 +245,7 @@ const alternateEn = "https://pedrolyra.dev/en/";
             <span>/</span>
             <a href="#projetos" class="hover:text-white transition-colors footer-link">{t('nav_projetos', lang)}</a>
             <span>/</span>
-            <a href="#desenvolvimento" class="hover:text-white transition-colors footer-link">{lang === 'pt-BR' ? 'Lab' : 'Sandbox'}</a>
+            <a href="#desenvolvimento" class="hover:text-white transition-colors footer-link">{t('footer_lab', lang)}</a>
           </div>
         </div>
       </div>
@@ -245,10 +263,10 @@ const alternateEn = "https://pedrolyra.dev/en/";
         <!-- Header do Modal -->
         <div class="px-6 py-5 border-b border-white/5 flex items-center justify-between">
           <div>
-            <span id="modal-project-category" class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase">// CATEGORIA</span>
+            <span id="modal-project-category" class="text-[10px] font-mono text-cyber-purple tracking-widest uppercase">{t('modal_project_category_label', lang)}</span>
             <h3 id="modal-project-title" class="font-display text-xl font-bold text-white mt-1">Nome do Projeto</h3>
           </div>
-          <button id="close-modal-btn" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200" aria-label={lang === 'pt-BR' ? "Fechar modal" : "Close modal"}>
+          <button id="close-modal-btn" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200" aria-label={t('modal_close_aria', lang)}>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>

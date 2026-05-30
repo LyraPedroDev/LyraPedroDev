@@ -30,11 +30,32 @@ const projects = [
   {
     id: 'lyrabrain',
     filename: 'brain.config',
-    theme: 'purple' as const,
-    techs: ['Claude Code', 'Automação', 'AI Assistant'],
+    theme: 'cyan' as const,
+    techs: ['Claude Code', 'Automation', 'AI Assistant'],
     github: 'https://github.com/LyraPedroDev/LyraBrain',
     categoryKey: 'project_prod_cat',
     prefix: 'brain'
+  }
+];
+
+const devProjects = [
+  {
+    id: 'feijoeiro',
+    filename: 'feijoeiro.js',
+    theme: 'purple' as const,
+    techs: ['HTML5', 'CSS3', 'Vanilla JS', 'Intersection Observer'],
+    github: 'https://github.com/LyraPedroDev/FeijoeiroMagico',
+    categoryKey: 'dev_tag_interfaces',
+    prefix: 'feijoeiro'
+  },
+  {
+    id: 'casa',
+    filename: 'fatima.config',
+    theme: 'cyan' as const,
+    techs: ['Architecture Patterns', 'Core Principles'],
+    github: 'https://github.com/LyraPedroDev/CasaNossaSenhoraDeFatima',
+    categoryKey: 'dev_tag_structure',
+    prefix: 'casa'
   }
 ];
 ---
@@ -154,6 +175,7 @@ const projects = [
           description={t(`${proj.prefix}_desc`, lang)}
           details={t(`${proj.prefix}_details`, lang)}
           category={t(proj.categoryKey, lang)}
+          lang={lang}
         />
       ))}
     </div>
@@ -184,77 +206,20 @@ const projects = [
 
     <!-- Cards de Projetos em Progresso -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-      <!-- Card 1: Feijoeiro Mágico -->
-      <div class="glass-card rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
-        <!-- Border Beam SVG -->
-        <svg class="border-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <rect class="border-beam-rect stroke-cyber-cyan" x="0.5" y="0.5" width="99" height="99" rx="4" />
-        </svg>
-
-        <!-- Indicador de Status -->
-        <div class="relative z-10 self-end flex items-center gap-1.5 font-mono text-[9px] text-cyber-pink bg-cyber-pink/10 px-2 py-0.5 rounded border border-cyber-pink/20">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyber-pink animate-pulse"></span>
-          <span>{t('dev_tag_interfaces', lang)}</span>
-        </div>
-
-        <div class="relative z-10 mt-4">
-          <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-pink transition-colors pr-20">
-            {t('feijoeiro_title', lang)}
-          </h3>
-          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6">
-            {t('feijoeiro_desc', lang)}
-          </p>
-        </div>
-
-        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 mt-auto">
-          <span class="font-mono text-[10px] text-gray-500">Tech: HTML, CSS, Vanilla JS</span>
-          <a
-            href="https://github.com/LyraPedroDev/FeijoeiroMagico"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={lang === 'pt-BR' ? "Acompanhar repositório do Feijoeiro Mágico no GitHub" : "Follow Feijoeiro Mágico repository on GitHub"}
-            class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
-          >
-            {t('dev_btn_repo', lang)}
-          </a>
-        </div>
-      </div>
-
-      <!-- Card 2: Casa Nossa Sra. de Fátima -->
-      <div class="glass-card rounded-xl p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
-        <!-- Border Beam SVG -->
-        <svg class="border-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <rect class="border-beam-rect stroke-cyber-cyan" x="0.5" y="0.5" width="99" height="99" rx="4" />
-        </svg>
-
-        <!-- Indicador de Status -->
-        <div class="relative z-10 self-end flex items-center gap-1.5 font-mono text-[9px] text-cyber-yellow bg-cyber-yellow/10 px-2 py-0.5 rounded border border-cyber-yellow/20">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyber-yellow animate-pulse"></span>
-          <span>{t('dev_tag_structure', lang)}</span>
-        </div>
-
-        <div class="relative z-10 mt-4">
-          <h3 class="font-display text-lg font-bold text-white mb-2 group-hover:text-cyber-yellow transition-colors pr-20">
-            {t('casa_title', lang)}
-          </h3>
-          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6">
-            {t('casa_desc', lang)}
-          </p>
-        </div>
-
-        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 mt-auto">
-          <span class="font-mono text-[10px] text-gray-500">Tech: Architecture, Core</span>
-          <a
-            href="https://github.com/LyraPedroDev/CasaNossaSenhoraDeFatima"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={lang === 'pt-BR' ? "Acompanhar repositório da Casa Nossa Senhora de Fátima no GitHub" : "Follow Casa Nossa Senhora de Fátima repository on GitHub"}
-            class="inline-flex items-center gap-1 text-xs font-mono font-medium text-cyber-blue hover:text-white transition-colors btn-interactive"
-          >
-            {t('dev_btn_repo', lang)}
-          </a>
-        </div>
-      </div>
+      {devProjects.map(proj => (
+        <ProjectCard
+          id={proj.id}
+          filename={proj.filename}
+          theme={proj.theme}
+          techs={proj.techs}
+          github={proj.github}
+          title={t(`${proj.prefix}_title`, lang)}
+          description={t(`${proj.prefix}_desc`, lang)}
+          details={t(`${proj.prefix}_details`, lang)}
+          category={t(proj.categoryKey, lang)}
+          lang={lang}
+        />
+      ))}
     </div>
   </section>
 

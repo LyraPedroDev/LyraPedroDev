@@ -7,10 +7,10 @@ interface Props {
 
 const { lang } = Astro.props;
 
-// URLs das APIs com parâmetros de cores do tema Cyber Dark
-const githubStatsUrl = "https://github-readme-stats.vercel.app/api?username=LyraPedroDev&theme=transparent&show_icons=true&bg_color=0D0E16&title_color=7C3AED&icon_color=06B6D4&text_color=E5E7EB&border_color=404060&hide_border=false";
-const githubStreakUrl = "https://github-readme-streak-stats.herokuapp.com/?user=LyraPedroDev&theme=dark&background=0D0E16&ring=7C3AED&fire=FF006E&currStreakNum=06B6D4";
-const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?username=LyraPedroDev&theme=transparent&layout=compact&bg_color=0D0E16&title_color=7C3AED&text_color=E5E7EB&border_color=404060";
+// URLs das APIs com parâmetros de cores do tema Cyber Dark + card width
+const githubStatsUrl = "https://github-readme-stats.vercel.app/api?username=LyraPedroDev&theme=transparent&show_icons=true&bg_color=0D0E16&title_color=7C3AED&icon_color=06B6D4&text_color=E5E7EB&border_color=404060&hide_border=false&card_width=500";
+const githubStreakUrl = "https://github-readme-streak-stats.herokuapp.com/?user=LyraPedroDev&theme=dark&background=0D0E16&ring=7C3AED&fire=FF006E&currStreakNum=06B6D4&sideNums=E5E7EB";
+const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?username=LyraPedroDev&theme=transparent&layout=compact&bg_color=0D0E16&title_color=7C3AED&text_color=E5E7EB&border_color=404060&hide_border=false";
 ---
 
 <section id="github-activity" class="py-24 px-6 relative z-10 max-w-6xl mx-auto fade-in-section">
@@ -36,10 +36,10 @@ const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?use
       <img
         src={githubStatsUrl}
         alt="GitHub Stats"
-        class="w-full h-auto max-w-full rounded-xl loading-lazy shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+        class="w-full h-auto max-w-full rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
         loading="lazy"
         width="450"
-        height="195"
+        height="270"
       />
     </div>
 
@@ -48,10 +48,10 @@ const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?use
       <img
         src={githubStreakUrl}
         alt="GitHub Streak"
-        class="w-full h-auto max-w-full rounded-xl loading-lazy shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+        class="w-full h-auto max-w-full rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
         loading="lazy"
         width="450"
-        height="195"
+        height="270"
       />
     </div>
 
@@ -60,10 +60,10 @@ const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?use
       <img
         src={githubLangsUrl}
         alt="Top Languages"
-        class="w-full h-auto max-w-full rounded-xl loading-lazy shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+        class="w-full h-auto max-w-full rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
         loading="lazy"
         width="450"
-        height="195"
+        height="270"
       />
     </div>
   </div>
@@ -76,20 +76,35 @@ const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?use
     grid-template-columns: 1fr;
   }
 
+  /* Evita Cumulative Layout Shift (CLS) reservando aspecto 60% */
   .card-container {
-    background: rgba(13, 14, 22, 0.65);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    position: relative;
+    padding-bottom: 60%;
+    overflow: hidden;
+    background: rgba(13, 14, 22, 0.55);
+    border-radius: 1rem;
+    will-change: border-color;
   }
 
   .card-container img {
-    max-width: 100%;
-    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Mantém proporções completas do SVG */
+    padding: 0.5rem;
   }
 
   @media (min-width: 768px) {
     .github-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Na visualização de tablet o 3º card fica embaixo ocupando 2 colunas */
+    .card-container.full-width {
+      grid-column: 1 / -1;
+      padding-bottom: 35%;
     }
   }
 
@@ -98,11 +113,10 @@ const githubLangsUrl = "https://github-readme-stats.vercel.app/api/top-langs?use
       grid-template-columns: repeat(3, 1fr);
     }
     
+    /* Na visualização de desktop todos os 3 cards ficam na mesma linha */
     .card-container.full-width {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: 100%;
-      max-width: 450px; /* Mantém o alinhamento centralizado proporcional */
+      grid-column: span 1;
+      padding-bottom: 60%;
     }
   }
 </style>
